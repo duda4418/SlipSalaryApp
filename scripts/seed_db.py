@@ -30,7 +30,7 @@ def seed():
 				email=fake.unique.email(),
 				first_name=fake.first_name(),
 				last_name=fake.last_name(),
-				role=Role.MANAGER.value
+				role=Role.MANAGER  # Use the correct enum value
 			)
 			db.add(user)
 			db.flush()
@@ -47,7 +47,7 @@ def seed():
 				first_name=fake.first_name(),
 				last_name=fake.last_name(),
 				cnp=fake.unique.numerify(text='#############'),
-				role=Role.EMPLOYEE.value
+				role=Role.EMPLOYEE  # Use the correct enum value
 			)
 			db.add(user)
 			db.flush()

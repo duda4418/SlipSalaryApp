@@ -8,7 +8,7 @@ from api.routers.months import months_router
 from api.routers.reports import reports_router
 from api.routers.salary_components import salary_components_router
 from api.routers.users import users_router
-from api.routers.vacations import vacation_router
+from api.routers.vacations import vacations_router
 
 app = fastapi.FastAPI()
 
@@ -18,7 +18,7 @@ app.include_router(idempotency_router, prefix="/api")
 app.include_router(managers_router, prefix="/api")
 app.include_router(salary_components_router, prefix="/api")
 app.include_router(months_router, prefix="/api")
-app.include_router(vacation_router, prefix="/api")
+app.include_router(vacations_router, prefix="/api")
 app.include_router(reports_router, prefix="/api")
 app.include_router(employees_router, prefix="/api")
 
