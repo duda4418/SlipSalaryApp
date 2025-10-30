@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from db import models, session
 from api.schemas import IdempotencyKeyResponse
 
-idempotency_router = APIRouter(prefix="/idempotency-keys")
+idempotency_router = APIRouter(prefix="/idempotency_keys")
 
 @idempotency_router.get("", response_model=list[IdempotencyKeyResponse])
 def list_idempotency_keys(db: Session = Depends(session.get_db)):

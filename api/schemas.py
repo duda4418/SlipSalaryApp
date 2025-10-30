@@ -1,14 +1,15 @@
 from core.config import CamelModel
 from typing import Optional
 from uuid import UUID
-from datetime import date
+from datetime import datetime, date
+
 
 class UserResponse(CamelModel):
 	id: UUID
 	email: str
 	password_hash: Optional[str]
 	is_active: bool
-	created_at: date
+	created_at: datetime
 
 
 class EmployeeResponse(CamelModel):

@@ -10,9 +10,9 @@ from sqlalchemy.orm import relationship, Mapped, mapped_column
 from db.base import Base 
 
 class SalaryComponentType(enum.Enum):
-    BASE = "base"
-    BONUS = "bonus"
-    ADJUSTMENT = "adjustment"
+    base = "base"
+    bonus = "bonus"
+    adjustment = "adjustment"
 
 class User(Base):
     __tablename__ = "users"

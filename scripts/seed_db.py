@@ -86,7 +86,7 @@ def seed():
 					employee_id=employee.id,
 					year=year,
 					month=month,
-					type=SalaryComponentType.BASE.value,
+					type=SalaryComponentType.base.value,
 					amount=employee.base_salary
 				)
 				db.add(base)
@@ -97,7 +97,7 @@ def seed():
 						employee_id=employee.id,
 						year=year,
 						month=month,
-						type=SalaryComponentType.BONUS.value,
+						type=SalaryComponentType.bonus.value,
 						amount=bonus_amt
 					)
 					db.add(bonus)
@@ -108,7 +108,7 @@ def seed():
 						employee_id=employee.id,
 						year=year,
 						month=month,
-						type=SalaryComponentType.ADJUSTMENT.value,
+						type=SalaryComponentType.adjustment.value,
 						amount=adj_amt
 					)
 					db.add(adjustment)
