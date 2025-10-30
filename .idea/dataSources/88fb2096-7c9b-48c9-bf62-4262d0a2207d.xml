@@ -3,7 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.53">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <IntrospectionStateNumber>746</IntrospectionStateNumber>
+      <IntrospectionStateNumber>749</IntrospectionStateNumber>
       <ServerVersion>16.10</ServerVersion>
       <StartupTime>1761806791</StartupTime>
       <TimeZones>true ACDT
@@ -704,7 +704,7 @@ true posixrules
 13276||10|C|G
 13276||-9223372036854775808|U|G
 13276||10|U|G</Grants>
-      <IntrospectionStateNumber>746</IntrospectionStateNumber>
+      <IntrospectionStateNumber>749</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
       <OwnerName>slip_salary_user</OwnerName>
     </database>
@@ -4124,11 +4124,11 @@ true posixrules
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <LastIntrospectionL1Xid>746</LastIntrospectionL1Xid>
-      <LastIntrospectionL2Xid>746</LastIntrospectionL2Xid>
-      <LastIntrospectionL3Xid>746</LastIntrospectionL3Xid>
+      <LastIntrospectionL1Xid>749</LastIntrospectionL1Xid>
+      <LastIntrospectionL2Xid>749</LastIntrospectionL2Xid>
+      <LastIntrospectionL3Xid>749</LastIntrospectionL3Xid>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2025-10-30.07:08:25</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-10-30.11:03:57</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>524</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>
@@ -4181,12 +4181,12 @@ ADJUSTMENT</Labels>
       <StoredType>integer|0s</StoredType>
       <OwnerName>slip_salary_user</OwnerName>
     </sequence>
-    <sequence id="270" parent="264" name="payroll_periods_id_seq">
+    <sequence id="270" parent="264" name="months_id_seq">
       <DetailsLevel>2</DetailsLevel>
-      <ObjectId>16404</ObjectId>
+      <ObjectId>16519</ObjectId>
       <SequenceIdentity>1</SequenceIdentity>
       <StartValue>1</StartValue>
-      <StateNumber>745</StateNumber>
+      <StateNumber>748</StateNumber>
       <StoredType>integer|0s</StoredType>
       <OwnerName>slip_salary_user</OwnerName>
     </sequence>
@@ -4254,10 +4254,10 @@ ADJUSTMENT</Labels>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>slip_salary_user</OwnerName>
     </table>
-    <table id="279" parent="264" name="payroll_periods">
+    <table id="279" parent="264" name="months">
       <DetailsLevel>2</DetailsLevel>
-      <ObjectId>16405</ObjectId>
-      <StateNumber>745</StateNumber>
+      <ObjectId>16520</ObjectId>
+      <StateNumber>748</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>slip_salary_user</OwnerName>
     </table>
@@ -4271,7 +4271,7 @@ ADJUSTMENT</Labels>
     <table id="281" parent="264" name="salary_components">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>16478</ObjectId>
-      <StateNumber>745</StateNumber>
+      <StateNumber>747</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>slip_salary_user</OwnerName>
     </table>
@@ -4285,7 +4285,7 @@ ADJUSTMENT</Labels>
     <table id="283" parent="264" name="vacations">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>16495</ObjectId>
-      <StateNumber>745</StateNumber>
+      <StateNumber>747</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>slip_salary_user</OwnerName>
     </table>
@@ -4527,72 +4527,65 @@ ADJUSTMENT</Labels>
       <UnderlyingIndexId>16444</UnderlyingIndexId>
     </key>
     <column id="315" parent="279" name="id">
-      <DefaultExpression>nextval(&apos;payroll_periods_id_seq&apos;::regclass)</DefaultExpression>
+      <DefaultExpression>nextval(&apos;months_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>745</StateNumber>
+      <StateNumber>748</StateNumber>
       <StoredType>integer|0s</StoredType>
-      <SequenceId>16404</SequenceId>
+      <SequenceId>16519</SequenceId>
       <TypeId>23</TypeId>
     </column>
     <column id="316" parent="279" name="year">
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>745</StateNumber>
+      <StateNumber>748</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
     <column id="317" parent="279" name="month">
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>745</StateNumber>
+      <StateNumber>748</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="318" parent="279" name="start_date">
+    <column id="318" parent="279" name="working_days">
       <NotNull>1</NotNull>
       <Position>4</Position>
-      <StateNumber>745</StateNumber>
-      <StoredType>date|0s</StoredType>
-      <TypeId>1082</TypeId>
+      <StateNumber>748</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <TypeId>23</TypeId>
     </column>
-    <column id="319" parent="279" name="end_date">
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-      <StateNumber>745</StateNumber>
-      <StoredType>date|0s</StoredType>
-      <TypeId>1082</TypeId>
-    </column>
-    <index id="320" parent="279" name="payroll_periods_pkey">
+    <index id="319" parent="279" name="months_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16409</ObjectId>
+      <ObjectId>16524</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>745</StateNumber>
+      <StateNumber>748</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="321" parent="279" name="uq_period">
+    <index id="320" parent="279" name="uq_monthinfo">
       <ColNames>year
 month</ColNames>
-      <ObjectId>16411</ObjectId>
-      <StateNumber>745</StateNumber>
+      <ObjectId>16526</ObjectId>
+      <StateNumber>748</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="322" parent="279" name="payroll_periods_pkey">
+    <key id="321" parent="279" name="months_pkey">
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16410</ObjectId>
+      <ObjectId>16525</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>745</StateNumber>
-      <UnderlyingIndexId>16409</UnderlyingIndexId>
+      <StateNumber>748</StateNumber>
+      <UnderlyingIndexId>16524</UnderlyingIndexId>
     </key>
-    <key id="323" parent="279" name="uq_period">
-      <ObjectId>16412</ObjectId>
-      <StateNumber>745</StateNumber>
-      <UnderlyingIndexId>16411</UnderlyingIndexId>
+    <key id="322" parent="279" name="uq_monthinfo">
+      <ObjectId>16527</ObjectId>
+      <StateNumber>748</StateNumber>
+      <UnderlyingIndexId>16526</UnderlyingIndexId>
     </key>
-    <column id="324" parent="280" name="id">
+    <column id="323" parent="280" name="id">
       <DefaultExpression>nextval(&apos;report_files_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -4601,42 +4594,42 @@ month</ColNames>
       <SequenceId>16413</SequenceId>
       <TypeId>23</TypeId>
     </column>
-    <column id="325" parent="280" name="path">
+    <column id="324" parent="280" name="path">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>745</StateNumber>
       <StoredType>varchar(512)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="326" parent="280" name="type">
+    <column id="325" parent="280" name="type">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>745</StateNumber>
       <StoredType>varchar(32)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="327" parent="280" name="owner_id">
+    <column id="326" parent="280" name="owner_id">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>745</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="328" parent="280" name="created_at">
+    <column id="327" parent="280" name="created_at">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>745</StateNumber>
       <StoredType>timestamp|0s</StoredType>
       <TypeId>1114</TypeId>
     </column>
-    <column id="329" parent="280" name="archived">
+    <column id="328" parent="280" name="archived">
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StateNumber>745</StateNumber>
       <StoredType>boolean|0s</StoredType>
       <TypeId>16</TypeId>
     </column>
-    <index id="330" parent="280" name="report_files_pkey">
+    <index id="329" parent="280" name="report_files_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16420</ObjectId>
@@ -4645,14 +4638,14 @@ month</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="331" parent="280" name="report_files_pkey">
+    <key id="330" parent="280" name="report_files_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16421</ObjectId>
       <Primary>1</Primary>
       <StateNumber>745</StateNumber>
       <UnderlyingIndexId>16420</UnderlyingIndexId>
     </key>
-    <column id="332" parent="281" name="id">
+    <column id="331" parent="281" name="id">
       <DefaultExpression>nextval(&apos;salary_components_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -4661,39 +4654,48 @@ month</ColNames>
       <SequenceId>16477</SequenceId>
       <TypeId>23</TypeId>
     </column>
-    <column id="333" parent="281" name="employee_id">
+    <column id="332" parent="281" name="employee_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>745</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="334" parent="281" name="period_id">
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-      <StateNumber>745</StateNumber>
-      <StoredType>integer|0s</StoredType>
-      <TypeId>23</TypeId>
-    </column>
-    <column id="335" parent="281" name="type">
+    <column id="333" parent="281" name="type">
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>745</StateNumber>
       <StoredType>salarycomponenttype|0s</StoredType>
       <TypeId>16471</TypeId>
     </column>
-    <column id="336" parent="281" name="amount">
+    <column id="334" parent="281" name="amount">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>745</StateNumber>
       <StoredType>numeric(12,2 digit)|0s</StoredType>
       <TypeId>1700</TypeId>
     </column>
-    <column id="337" parent="281" name="note">
+    <column id="335" parent="281" name="note">
       <Position>6</Position>
       <StateNumber>745</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
+    </column>
+    <column id="336" parent="281" name="year">
+      <DefaultExpression>2025</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StateNumber>747</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="337" parent="281" name="month">
+      <DefaultExpression>10</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StateNumber>747</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <TypeId>23</TypeId>
     </column>
     <foreign-key id="338" parent="281" name="salary_components_employee_id_fkey">
       <ColNames>employee_id</ColNames>
@@ -4703,20 +4705,22 @@ month</ColNames>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>16452</RefTableId>
     </foreign-key>
-    <foreign-key id="339" parent="281" name="salary_components_period_id_fkey">
-      <ColNames>period_id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16489</ObjectId>
-      <StateNumber>745</StateNumber>
-      <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>16405</RefTableId>
-    </foreign-key>
-    <index id="340" parent="281" name="salary_components_pkey">
+    <index id="339" parent="281" name="salary_components_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16482</ObjectId>
       <Primary>1</Primary>
       <StateNumber>745</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="340" parent="281" name="uq_salary_component">
+      <ColNames>employee_id
+year
+month
+type</ColNames>
+      <ObjectId>16515</ObjectId>
+      <StateNumber>747</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
@@ -4727,7 +4731,12 @@ month</ColNames>
       <StateNumber>745</StateNumber>
       <UnderlyingIndexId>16482</UnderlyingIndexId>
     </key>
-    <column id="342" parent="282" name="id">
+    <key id="342" parent="281" name="uq_salary_component">
+      <ObjectId>16516</ObjectId>
+      <StateNumber>747</StateNumber>
+      <UnderlyingIndexId>16515</UnderlyingIndexId>
+    </key>
+    <column id="343" parent="282" name="id">
       <DefaultExpression>nextval(&apos;users_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -4736,34 +4745,34 @@ month</ColNames>
       <SequenceId>16427</SequenceId>
       <TypeId>23</TypeId>
     </column>
-    <column id="343" parent="282" name="email">
+    <column id="344" parent="282" name="email">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>745</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="344" parent="282" name="full_name">
+    <column id="345" parent="282" name="full_name">
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>745</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="345" parent="282" name="cnp">
+    <column id="346" parent="282" name="cnp">
       <Position>4</Position>
       <StateNumber>745</StateNumber>
       <StoredType>varchar(32)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="346" parent="282" name="role">
+    <column id="347" parent="282" name="role">
       <NotNull>1</NotNull>
       <Position>5</Position>
       <StateNumber>745</StateNumber>
       <StoredType>role|0s</StoredType>
       <TypeId>16423</TypeId>
     </column>
-    <index id="347" parent="282" name="users_pkey">
+    <index id="348" parent="282" name="users_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16434</ObjectId>
@@ -4772,7 +4781,7 @@ month</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="348" parent="282" name="ix_users_email">
+    <index id="349" parent="282" name="ix_users_email">
       <ColNames>email</ColNames>
       <ObjectId>16436</ObjectId>
       <StateNumber>745</StateNumber>
@@ -4782,14 +4791,14 @@ month</ColNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="349" parent="282" name="users_pkey">
+    <key id="350" parent="282" name="users_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16435</ObjectId>
       <Primary>1</Primary>
       <StateNumber>745</StateNumber>
       <UnderlyingIndexId>16434</UnderlyingIndexId>
     </key>
-    <column id="350" parent="283" name="id">
+    <column id="351" parent="283" name="id">
       <DefaultExpression>nextval(&apos;vacations_id_seq&apos;::regclass)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -4798,16 +4807,9 @@ month</ColNames>
       <SequenceId>16494</SequenceId>
       <TypeId>23</TypeId>
     </column>
-    <column id="351" parent="283" name="employee_id">
+    <column id="352" parent="283" name="employee_id">
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>745</StateNumber>
-      <StoredType>integer|0s</StoredType>
-      <TypeId>23</TypeId>
-    </column>
-    <column id="352" parent="283" name="period_id">
-      <NotNull>1</NotNull>
-      <Position>3</Position>
       <StateNumber>745</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
@@ -4819,7 +4821,23 @@ month</ColNames>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <foreign-key id="354" parent="283" name="vacations_employee_id_fkey">
+    <column id="354" parent="283" name="year">
+      <DefaultExpression>2025</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StateNumber>747</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="355" parent="283" name="month">
+      <DefaultExpression>10</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StateNumber>747</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <TypeId>23</TypeId>
+    </column>
+    <foreign-key id="356" parent="283" name="vacations_employee_id_fkey">
       <ColNames>employee_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16501</ObjectId>
@@ -4827,15 +4845,7 @@ month</ColNames>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>16452</RefTableId>
     </foreign-key>
-    <foreign-key id="355" parent="283" name="vacations_period_id_fkey">
-      <ColNames>period_id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16506</ObjectId>
-      <StateNumber>745</StateNumber>
-      <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>16405</RefTableId>
-    </foreign-key>
-    <index id="356" parent="283" name="vacations_pkey">
+    <index id="357" parent="283" name="vacations_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16499</ObjectId>
@@ -4844,12 +4854,26 @@ month</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="357" parent="283" name="vacations_pkey">
+    <index id="358" parent="283" name="uq_vacation">
+      <ColNames>employee_id
+year
+month</ColNames>
+      <ObjectId>16517</ObjectId>
+      <StateNumber>747</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="359" parent="283" name="vacations_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16500</ObjectId>
       <Primary>1</Primary>
       <StateNumber>745</StateNumber>
       <UnderlyingIndexId>16499</UnderlyingIndexId>
+    </key>
+    <key id="360" parent="283" name="uq_vacation">
+      <ObjectId>16518</ObjectId>
+      <StateNumber>747</StateNumber>
+      <UnderlyingIndexId>16517</UnderlyingIndexId>
     </key>
   </database-model>
 </dataSource>

@@ -1,6 +1,6 @@
 import fastapi, uvicorn
 
-from routes.health import health_router
+from routers.health import health_router
 
 app = fastapi.FastAPI()
 
