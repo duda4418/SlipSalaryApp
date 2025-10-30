@@ -10,8 +10,8 @@ class Settings(BaseSettings):
 	POSTGRES_DB: str
 	POSTGRES_USER: str
 	POSTGRES_PASSWORD: str
-	POSTGRES_HOST: str
-	POSTGRES_PORT: int
+	PGHOST: str
+	PGPORT: int
 	LOG_LEVEL: str | None = None
 
 	@property
@@ -19,7 +19,7 @@ class Settings(BaseSettings):
 		"""Build the SQLAlchemy database URL from settings."""
 		return (
 			f"postgresql+psycopg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
-			f"@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+			f"@{self.PGHOST}:{self.PGPORT}/{self.POSTGRES_DB}"
 		)
 
 	class Config:
