@@ -1,14 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from db import models, session
+from api.schemas import ReportFileResponse
 
 reports_router = APIRouter(prefix="/reports")
 
-@reports_router.get("")
+@reports_router.get("", response_model=list[ReportFileResponse])
 def list_report_files(db: Session = Depends(session.get_db)):
     return db.query(models.ReportFile).all()
 
-@reports_router.get("/{report_id}")
+@reports_router.get("/{report_id}", response_model=ReportFileResponse)
 def get_report_file_by_id(report_id: str, db: Session = Depends(session.get_db)):
     report = db.query(models.ReportFile).get(report_id)
     if not report:

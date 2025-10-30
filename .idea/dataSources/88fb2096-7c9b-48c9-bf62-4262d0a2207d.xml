@@ -11,9 +11,9 @@
 4||10|c|G
 4||10|C|G
 4||10|T|G</Grants>
-      <IntrospectionStateNumber>744</IntrospectionStateNumber>
+      <IntrospectionStateNumber>750</IntrospectionStateNumber>
       <ServerVersion>16.10</ServerVersion>
-      <StartupTime>1761831403</StartupTime>
+      <StartupTime>1761835042</StartupTime>
       <TimeZones>true ACDT
 true ACSST
 false ACST
@@ -712,7 +712,7 @@ true posixrules
 13276||10|C|G
 13276||-9223372036854775808|U|G
 13276||10|U|G</Grants>
-      <IntrospectionStateNumber>744</IntrospectionStateNumber>
+      <IntrospectionStateNumber>750</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
       <OwnerName>slip_salary_user</OwnerName>
     </database>
@@ -4132,664 +4132,625 @@ true posixrules
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <LastIntrospectionL1Xid>744</LastIntrospectionL1Xid>
-      <LastIntrospectionL2Xid>744</LastIntrospectionL2Xid>
-      <LastIntrospectionL3Xid>744</LastIntrospectionL3Xid>
+      <LastIntrospectionL1Xid>750</LastIntrospectionL1Xid>
+      <LastIntrospectionL2Xid>750</LastIntrospectionL2Xid>
+      <LastIntrospectionL3Xid>750</LastIntrospectionL3Xid>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2025-10-30.13:38:11</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-10-30.14:39:08</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>524</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>
     </schema>
-    <object-type id="265" parent="264" name="role">
-      <DetailsLevel>2</DetailsLevel>
-      <Labels>MANAGER
-EMPLOYEE</Labels>
-      <ObjectId>16395</ObjectId>
-      <StateNumber>743</StateNumber>
-      <SubCategory>enum</SubCategory>
-      <SubKind>enum</SubKind>
-      <OwnerName>slip_salary_user</OwnerName>
-    </object-type>
-    <object-type id="266" parent="264" name="salarycomponenttype">
+    <object-type id="265" parent="264" name="salarycomponenttype">
       <DetailsLevel>2</DetailsLevel>
       <Labels>base
 bonus
 adjustment</Labels>
-      <ObjectId>16437</ObjectId>
-      <StateNumber>743</StateNumber>
+      <ObjectId>16430</ObjectId>
+      <StateNumber>744</StateNumber>
       <SubCategory>enum</SubCategory>
       <SubKind>enum</SubKind>
       <OwnerName>slip_salary_user</OwnerName>
     </object-type>
-    <table id="267" parent="264" name="alembic_version">
+    <table id="266" parent="264" name="alembic_version">
       <DetailsLevel>2</DetailsLevel>
-      <ObjectId>16389</ObjectId>
-      <StateNumber>743</StateNumber>
+      <ObjectId>16394</ObjectId>
+      <StateNumber>744</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>slip_salary_user</OwnerName>
     </table>
-    <table id="268" parent="264" name="employees">
-      <DetailsLevel>2</DetailsLevel>
-      <ObjectId>16419</ObjectId>
-      <StateNumber>743</StateNumber>
-      <AccessMethodId>2</AccessMethodId>
-      <OwnerName>slip_salary_user</OwnerName>
-    </table>
-    <table id="269" parent="264" name="idempotency_keys">
-      <DetailsLevel>2</DetailsLevel>
-      <ObjectId>16474</ObjectId>
-      <StateNumber>743</StateNumber>
-      <AccessMethodId>2</AccessMethodId>
-      <OwnerName>slip_salary_user</OwnerName>
-    </table>
-    <table id="270" parent="264" name="managers">
+    <table id="267" parent="264" name="employees">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>16407</ObjectId>
-      <StateNumber>743</StateNumber>
+      <StateNumber>748</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>slip_salary_user</OwnerName>
     </table>
-    <table id="271" parent="264" name="months">
+    <table id="268" parent="264" name="idempotency_keys">
       <DetailsLevel>2</DetailsLevel>
-      <ObjectId>16467</ObjectId>
-      <StateNumber>743</StateNumber>
+      <ObjectId>16463</ObjectId>
+      <StateNumber>748</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>slip_salary_user</OwnerName>
     </table>
-    <table id="272" parent="264" name="report_files">
+    <table id="269" parent="264" name="months">
       <DetailsLevel>2</DetailsLevel>
-      <ObjectId>16482</ObjectId>
-      <StateNumber>743</StateNumber>
+      <ObjectId>16478</ObjectId>
+      <StateNumber>748</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>slip_salary_user</OwnerName>
     </table>
-    <table id="273" parent="264" name="salary_components">
+    <table id="270" parent="264" name="report_files">
       <DetailsLevel>2</DetailsLevel>
-      <ObjectId>16443</ObjectId>
-      <StateNumber>743</StateNumber>
+      <ObjectId>16471</ObjectId>
+      <StateNumber>748</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>slip_salary_user</OwnerName>
     </table>
-    <table id="274" parent="264" name="users">
+    <table id="271" parent="264" name="salary_components">
+      <DetailsLevel>2</DetailsLevel>
+      <ObjectId>16437</ObjectId>
+      <StateNumber>748</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>slip_salary_user</OwnerName>
+    </table>
+    <table id="272" parent="264" name="users">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>16399</ObjectId>
-      <StateNumber>743</StateNumber>
+      <StateNumber>748</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>slip_salary_user</OwnerName>
     </table>
-    <table id="275" parent="264" name="vacations">
+    <table id="273" parent="264" name="vacations">
       <DetailsLevel>2</DetailsLevel>
-      <ObjectId>16455</ObjectId>
-      <StateNumber>743</StateNumber>
+      <ObjectId>16450</ObjectId>
+      <StateNumber>748</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>slip_salary_user</OwnerName>
     </table>
-    <column id="276" parent="267" name="version_num">
+    <column id="274" parent="266" name="version_num">
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>743</StateNumber>
+      <StateNumber>744</StateNumber>
       <StoredType>varchar(32)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <index id="277" parent="267" name="alembic_version_pkc">
+    <index id="275" parent="266" name="alembic_version_pkc">
       <ColNames>version_num</ColNames>
-      <ObjectId>16392</ObjectId>
+      <ObjectId>16397</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
+      <StateNumber>744</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
       <CollationNames>default</CollationNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="278" parent="267" name="alembic_version_pkc">
-      <ObjectId>16393</ObjectId>
+    <key id="276" parent="266" name="alembic_version_pkc">
+      <ObjectId>16398</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
-      <UnderlyingIndexId>16392</UnderlyingIndexId>
+      <StateNumber>744</StateNumber>
+      <UnderlyingIndexId>16397</UnderlyingIndexId>
     </key>
-    <column id="279" parent="268" name="id">
+    <column id="277" parent="267" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>743</StateNumber>
+      <StateNumber>744</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="280" parent="268" name="user_id">
-      <NotNull>1</NotNull>
+    <column id="278" parent="267" name="user_id">
       <Position>2</Position>
-      <StateNumber>743</StateNumber>
+      <StateNumber>744</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="281" parent="268" name="manager_id">
+    <column id="279" parent="267" name="first_name">
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>uuid|0s</StoredType>
-      <TypeId>2950</TypeId>
-    </column>
-    <column id="282" parent="268" name="hire_date">
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>date|0s</StoredType>
-      <TypeId>1082</TypeId>
-    </column>
-    <column id="283" parent="268" name="base_salary">
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>numeric(12,2 digit)|0s</StoredType>
-      <TypeId>1700</TypeId>
-    </column>
-    <foreign-key id="284" parent="268" name="fk_employees_user_id_users">
-      <ColNames>user_id</ColNames>
-      <ObjectId>16431</ObjectId>
-      <StateNumber>743</StateNumber>
-      <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>16399</RefTableId>
-    </foreign-key>
-    <foreign-key id="285" parent="268" name="fk_employees_manager_id_managers">
-      <ColNames>manager_id</ColNames>
-      <ObjectId>16426</ObjectId>
-      <StateNumber>743</StateNumber>
-      <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>16407</RefTableId>
-    </foreign-key>
-    <index id="286" parent="268" name="employees_pkey">
-      <ColNames>id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16422</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
-      <Unique>1</Unique>
-      <AccessMethodId>403</AccessMethodId>
-    </index>
-    <index id="287" parent="268" name="employees_user_id_key">
-      <ColNames>user_id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16424</ObjectId>
-      <StateNumber>743</StateNumber>
-      <Unique>1</Unique>
-      <AccessMethodId>403</AccessMethodId>
-    </index>
-    <key id="288" parent="268" name="employees_pkey">
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16423</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
-      <UnderlyingIndexId>16422</UnderlyingIndexId>
-    </key>
-    <key id="289" parent="268" name="employees_user_id_key">
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16425</ObjectId>
-      <StateNumber>743</StateNumber>
-      <UnderlyingIndexId>16424</UnderlyingIndexId>
-    </key>
-    <column id="290" parent="269" name="id">
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>uuid|0s</StoredType>
-      <TypeId>2950</TypeId>
-    </column>
-    <column id="291" parent="269" name="key">
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>varchar(128)|0s</StoredType>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="292" parent="269" name="endpoint">
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>varchar(128)|0s</StoredType>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="293" parent="269" name="status">
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>varchar(32)|0s</StoredType>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="294" parent="269" name="result_path">
-      <Position>5</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>varchar(512)|0s</StoredType>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="295" parent="269" name="created_at">
-      <NotNull>1</NotNull>
-      <Position>6</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>timestamp|0s</StoredType>
-      <TypeId>1114</TypeId>
-    </column>
-    <column id="296" parent="269" name="updated_at">
-      <NotNull>1</NotNull>
-      <Position>7</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>timestamp|0s</StoredType>
-      <TypeId>1114</TypeId>
-    </column>
-    <index id="297" parent="269" name="idempotency_keys_pkey">
-      <ColNames>id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16479</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
-      <Unique>1</Unique>
-      <AccessMethodId>403</AccessMethodId>
-    </index>
-    <index id="298" parent="269" name="ix_idempotency_keys_key">
-      <ColNames>key</ColNames>
-      <ObjectId>16481</ObjectId>
-      <StateNumber>743</StateNumber>
-      <Unique>1</Unique>
-      <AccessMethodId>403</AccessMethodId>
-      <CollationNames>default</CollationNames>
-      <CollationIds>100</CollationIds>
-      <CollationParentNames>pg_catalog</CollationParentNames>
-    </index>
-    <key id="299" parent="269" name="idempotency_keys_pkey">
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16480</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
-      <UnderlyingIndexId>16479</UnderlyingIndexId>
-    </key>
-    <column id="300" parent="270" name="id">
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>uuid|0s</StoredType>
-      <TypeId>2950</TypeId>
-    </column>
-    <column id="301" parent="270" name="user_id">
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>uuid|0s</StoredType>
-      <TypeId>2950</TypeId>
-    </column>
-    <foreign-key id="302" parent="270" name="fk_managers_user_id_users">
-      <ColNames>user_id</ColNames>
-      <ObjectId>16414</ObjectId>
-      <StateNumber>743</StateNumber>
-      <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>16399</RefTableId>
-    </foreign-key>
-    <index id="303" parent="270" name="managers_pkey">
-      <ColNames>id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16410</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
-      <Unique>1</Unique>
-      <AccessMethodId>403</AccessMethodId>
-    </index>
-    <index id="304" parent="270" name="managers_user_id_key">
-      <ColNames>user_id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16412</ObjectId>
-      <StateNumber>743</StateNumber>
-      <Unique>1</Unique>
-      <AccessMethodId>403</AccessMethodId>
-    </index>
-    <key id="305" parent="270" name="managers_pkey">
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16411</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
-      <UnderlyingIndexId>16410</UnderlyingIndexId>
-    </key>
-    <key id="306" parent="270" name="managers_user_id_key">
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16413</ObjectId>
-      <StateNumber>743</StateNumber>
-      <UnderlyingIndexId>16412</UnderlyingIndexId>
-    </key>
-    <column id="307" parent="271" name="id">
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>uuid|0s</StoredType>
-      <TypeId>2950</TypeId>
-    </column>
-    <column id="308" parent="271" name="year">
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>integer|0s</StoredType>
-      <TypeId>23</TypeId>
-    </column>
-    <column id="309" parent="271" name="month">
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>integer|0s</StoredType>
-      <TypeId>23</TypeId>
-    </column>
-    <column id="310" parent="271" name="working_days">
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>integer|0s</StoredType>
-      <TypeId>23</TypeId>
-    </column>
-    <index id="311" parent="271" name="months_pkey">
-      <ColNames>id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16470</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
-      <Unique>1</Unique>
-      <AccessMethodId>403</AccessMethodId>
-    </index>
-    <index id="312" parent="271" name="uq_monthinfo">
-      <ColNames>year
-month</ColNames>
-      <ObjectId>16472</ObjectId>
-      <StateNumber>743</StateNumber>
-      <Unique>1</Unique>
-      <AccessMethodId>403</AccessMethodId>
-    </index>
-    <key id="313" parent="271" name="months_pkey">
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16471</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
-      <UnderlyingIndexId>16470</UnderlyingIndexId>
-    </key>
-    <key id="314" parent="271" name="uq_monthinfo">
-      <ObjectId>16473</ObjectId>
-      <StateNumber>743</StateNumber>
-      <UnderlyingIndexId>16472</UnderlyingIndexId>
-    </key>
-    <column id="315" parent="272" name="id">
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>uuid|0s</StoredType>
-      <TypeId>2950</TypeId>
-    </column>
-    <column id="316" parent="272" name="path">
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>varchar(512)|0s</StoredType>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="317" parent="272" name="type">
-      <Position>3</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>varchar(32)|0s</StoredType>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="318" parent="272" name="owner_id">
-      <Position>4</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>uuid|0s</StoredType>
-      <TypeId>2950</TypeId>
-    </column>
-    <column id="319" parent="272" name="created_at">
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>timestamp|0s</StoredType>
-      <TypeId>1114</TypeId>
-    </column>
-    <column id="320" parent="272" name="archived">
-      <NotNull>1</NotNull>
-      <Position>6</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>boolean|0s</StoredType>
-      <TypeId>16</TypeId>
-    </column>
-    <index id="321" parent="272" name="report_files_pkey">
-      <ColNames>id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16487</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
-      <Unique>1</Unique>
-      <AccessMethodId>403</AccessMethodId>
-    </index>
-    <key id="322" parent="272" name="report_files_pkey">
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16488</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
-      <UnderlyingIndexId>16487</UnderlyingIndexId>
-    </key>
-    <column id="323" parent="273" name="id">
-      <NotNull>1</NotNull>
-      <Position>1</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>uuid|0s</StoredType>
-      <TypeId>2950</TypeId>
-    </column>
-    <column id="324" parent="273" name="employee_id">
-      <NotNull>1</NotNull>
-      <Position>2</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>uuid|0s</StoredType>
-      <TypeId>2950</TypeId>
-    </column>
-    <column id="325" parent="273" name="year">
-      <NotNull>1</NotNull>
-      <Position>3</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>integer|0s</StoredType>
-      <TypeId>23</TypeId>
-    </column>
-    <column id="326" parent="273" name="month">
-      <NotNull>1</NotNull>
-      <Position>4</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>integer|0s</StoredType>
-      <TypeId>23</TypeId>
-    </column>
-    <column id="327" parent="273" name="type">
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>salarycomponenttype|0s</StoredType>
-      <TypeId>16437</TypeId>
-    </column>
-    <column id="328" parent="273" name="amount">
-      <NotNull>1</NotNull>
-      <Position>6</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>numeric(12,2 digit)|0s</StoredType>
-      <TypeId>1700</TypeId>
-    </column>
-    <column id="329" parent="273" name="note">
-      <Position>7</Position>
-      <StateNumber>743</StateNumber>
+      <StateNumber>744</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <foreign-key id="330" parent="273" name="fk_salary_components_employee_id_employees">
-      <ColNames>employee_id</ColNames>
-      <ObjectId>16450</ObjectId>
-      <StateNumber>743</StateNumber>
+    <column id="280" parent="267" name="last_name">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="281" parent="267" name="email">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="282" parent="267" name="cnp">
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>varchar(32)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="283" parent="267" name="hire_date">
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>date|0s</StoredType>
+      <TypeId>1082</TypeId>
+    </column>
+    <column id="284" parent="267" name="base_salary">
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>numeric(12,2 digit)|0s</StoredType>
+      <TypeId>1700</TypeId>
+    </column>
+    <column id="285" parent="267" name="manager_id">
+      <Position>9</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <foreign-key id="286" parent="267" name="fk_employees_user_id_users">
+      <ColNames>user_id</ColNames>
+      <ObjectId>16418</ObjectId>
+      <StateNumber>744</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>16419</RefTableId>
+      <RefTableId>16399</RefTableId>
     </foreign-key>
-    <index id="331" parent="273" name="salary_components_pkey">
+    <foreign-key id="287" parent="267" name="fk_employees_manager_id_employees">
+      <ColNames>manager_id</ColNames>
+      <ObjectId>16423</ObjectId>
+      <StateNumber>744</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>16407</RefTableId>
+    </foreign-key>
+    <index id="288" parent="267" name="pk_employees">
       <ColNames>id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16446</ObjectId>
+      <ObjectId>16412</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
+      <StateNumber>748</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="332" parent="273" name="uq_salary_component">
+    <index id="289" parent="267" name="uq_employees_user_id">
+      <ColNames>user_id</ColNames>
+      <ObjectId>16414</ObjectId>
+      <StateNumber>748</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="290" parent="267" name="ix_employees_email">
+      <ColNames>email</ColNames>
+      <ObjectId>16428</ObjectId>
+      <StateNumber>748</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationNames>default</CollationNames>
+      <CollationIds>100</CollationIds>
+      <CollationParentNames>pg_catalog</CollationParentNames>
+    </index>
+    <index id="291" parent="267" name="uq_employees_cnp">
+      <ColNames>cnp</ColNames>
+      <ObjectId>16416</ObjectId>
+      <StateNumber>748</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationNames>default</CollationNames>
+      <CollationIds>100</CollationIds>
+      <CollationParentNames>pg_catalog</CollationParentNames>
+    </index>
+    <key id="292" parent="267" name="pk_employees">
+      <ObjectId>16413</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>744</StateNumber>
+      <UnderlyingIndexId>16412</UnderlyingIndexId>
+    </key>
+    <key id="293" parent="267" name="uq_employees_user_id">
+      <ObjectId>16415</ObjectId>
+      <StateNumber>744</StateNumber>
+      <UnderlyingIndexId>16414</UnderlyingIndexId>
+    </key>
+    <key id="294" parent="267" name="uq_employees_cnp">
+      <ObjectId>16417</ObjectId>
+      <StateNumber>744</StateNumber>
+      <UnderlyingIndexId>16416</UnderlyingIndexId>
+    </key>
+    <column id="295" parent="268" name="id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="296" parent="268" name="key">
+      <Position>2</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>varchar(128)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="297" parent="268" name="endpoint">
+      <Position>3</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>varchar(128)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="298" parent="268" name="status">
+      <Position>4</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>varchar(32)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="299" parent="268" name="result_path">
+      <Position>5</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>varchar(512)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="300" parent="268" name="created_at">
+      <Position>6</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>timestamp|0s</StoredType>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="301" parent="268" name="updated_at">
+      <Position>7</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>timestamp|0s</StoredType>
+      <TypeId>1114</TypeId>
+    </column>
+    <index id="302" parent="268" name="pk_idempotency_keys">
+      <ColNames>id</ColNames>
+      <ObjectId>16468</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>748</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="303" parent="268" name="ix_idempotency_keys_key">
+      <ColNames>key</ColNames>
+      <ObjectId>16470</ObjectId>
+      <StateNumber>748</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationNames>default</CollationNames>
+      <CollationIds>100</CollationIds>
+      <CollationParentNames>pg_catalog</CollationParentNames>
+    </index>
+    <key id="304" parent="268" name="pk_idempotency_keys">
+      <ObjectId>16469</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>744</StateNumber>
+      <UnderlyingIndexId>16468</UnderlyingIndexId>
+    </key>
+    <column id="305" parent="269" name="id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="306" parent="269" name="year">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="307" parent="269" name="month">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="308" parent="269" name="working_days">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="309" parent="269" name="pk_months">
+      <ColNames>id</ColNames>
+      <ObjectId>16481</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>748</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="310" parent="269" name="uq_monthinfo">
+      <ColNames>year
+month</ColNames>
+      <ObjectId>16483</ObjectId>
+      <StateNumber>748</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="311" parent="269" name="pk_months">
+      <ObjectId>16482</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>744</StateNumber>
+      <UnderlyingIndexId>16481</UnderlyingIndexId>
+    </key>
+    <key id="312" parent="269" name="uq_monthinfo">
+      <ObjectId>16484</ObjectId>
+      <StateNumber>744</StateNumber>
+      <UnderlyingIndexId>16483</UnderlyingIndexId>
+    </key>
+    <column id="313" parent="270" name="id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="314" parent="270" name="path">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>varchar(512)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="315" parent="270" name="type">
+      <Position>3</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>varchar(32)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="316" parent="270" name="owner_id">
+      <Position>4</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="317" parent="270" name="created_at">
+      <Position>5</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>timestamp|0s</StoredType>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="318" parent="270" name="archived">
+      <Position>6</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>boolean|0s</StoredType>
+      <TypeId>16</TypeId>
+    </column>
+    <index id="319" parent="270" name="pk_report_files">
+      <ColNames>id</ColNames>
+      <ObjectId>16476</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>748</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="320" parent="270" name="pk_report_files">
+      <ObjectId>16477</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>744</StateNumber>
+      <UnderlyingIndexId>16476</UnderlyingIndexId>
+    </key>
+    <column id="321" parent="271" name="id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="322" parent="271" name="employee_id">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="323" parent="271" name="year">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="324" parent="271" name="month">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="325" parent="271" name="type">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>salarycomponenttype|0s</StoredType>
+      <TypeId>16430</TypeId>
+    </column>
+    <column id="326" parent="271" name="amount">
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>numeric(12,2 digit)|0s</StoredType>
+      <TypeId>1700</TypeId>
+    </column>
+    <column id="327" parent="271" name="note">
+      <Position>7</Position>
+      <StateNumber>744</StateNumber>
+      <StoredType>varchar(255)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <foreign-key id="328" parent="271" name="fk_salary_components_employee_id_employees">
+      <ColNames>employee_id</ColNames>
+      <ObjectId>16444</ObjectId>
+      <StateNumber>744</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>16407</RefTableId>
+    </foreign-key>
+    <index id="329" parent="271" name="pk_salary_components">
+      <ColNames>id</ColNames>
+      <ObjectId>16440</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>748</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="330" parent="271" name="uq_salary_component">
       <ColNames>employee_id
 year
 month
 type</ColNames>
-      <ObjectId>16448</ObjectId>
-      <StateNumber>743</StateNumber>
+      <ObjectId>16442</ObjectId>
+      <StateNumber>748</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="333" parent="273" name="salary_components_pkey">
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16447</ObjectId>
-      <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
-      <UnderlyingIndexId>16446</UnderlyingIndexId>
-    </key>
-    <key id="334" parent="273" name="uq_salary_component">
+    <index id="331" parent="271" name="ix_salary_components_employee_id">
+      <ColNames>employee_id</ColNames>
       <ObjectId>16449</ObjectId>
-      <StateNumber>743</StateNumber>
-      <UnderlyingIndexId>16448</UnderlyingIndexId>
+      <StateNumber>748</StateNumber>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="332" parent="271" name="pk_salary_components">
+      <ObjectId>16441</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>744</StateNumber>
+      <UnderlyingIndexId>16440</UnderlyingIndexId>
     </key>
-    <column id="335" parent="274" name="id">
+    <key id="333" parent="271" name="uq_salary_component">
+      <ObjectId>16443</ObjectId>
+      <StateNumber>744</StateNumber>
+      <UnderlyingIndexId>16442</UnderlyingIndexId>
+    </key>
+    <column id="334" parent="272" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>743</StateNumber>
+      <StateNumber>744</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="336" parent="274" name="email">
+    <column id="335" parent="272" name="email">
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>743</StateNumber>
+      <StateNumber>744</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="337" parent="274" name="first_name">
-      <NotNull>1</NotNull>
+    <column id="336" parent="272" name="password_hash">
       <Position>3</Position>
-      <StateNumber>743</StateNumber>
+      <StateNumber>744</StateNumber>
       <StoredType>varchar(255)|0s</StoredType>
       <TypeId>1043</TypeId>
     </column>
-    <column id="338" parent="274" name="last_name">
-      <NotNull>1</NotNull>
+    <column id="337" parent="272" name="is_active">
       <Position>4</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>varchar(255)|0s</StoredType>
-      <TypeId>1043</TypeId>
+      <StateNumber>744</StateNumber>
+      <StoredType>boolean|0s</StoredType>
+      <TypeId>16</TypeId>
     </column>
-    <column id="339" parent="274" name="cnp">
+    <column id="338" parent="272" name="created_at">
       <Position>5</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>varchar(32)|0s</StoredType>
-      <TypeId>1043</TypeId>
+      <StateNumber>744</StateNumber>
+      <StoredType>timestamp|0s</StoredType>
+      <TypeId>1114</TypeId>
     </column>
-    <column id="340" parent="274" name="role">
-      <NotNull>1</NotNull>
-      <Position>6</Position>
-      <StateNumber>743</StateNumber>
-      <StoredType>role|0s</StoredType>
-      <TypeId>16395</TypeId>
-    </column>
-    <index id="341" parent="274" name="users_pkey">
+    <index id="339" parent="272" name="pk_users">
       <ColNames>id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
       <ObjectId>16404</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
+      <StateNumber>748</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="342" parent="274" name="ix_users_email">
+    <index id="340" parent="272" name="ix_users_email">
       <ColNames>email</ColNames>
       <ObjectId>16406</ObjectId>
-      <StateNumber>743</StateNumber>
+      <StateNumber>748</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
       <CollationNames>default</CollationNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="343" parent="274" name="users_pkey">
-      <NameSurrogate>1</NameSurrogate>
+    <key id="341" parent="272" name="pk_users">
       <ObjectId>16405</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
+      <StateNumber>744</StateNumber>
       <UnderlyingIndexId>16404</UnderlyingIndexId>
     </key>
-    <column id="344" parent="275" name="id">
+    <column id="342" parent="273" name="id">
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>743</StateNumber>
+      <StateNumber>744</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="345" parent="275" name="employee_id">
-      <NotNull>1</NotNull>
+    <column id="343" parent="273" name="employee_id">
       <Position>2</Position>
-      <StateNumber>743</StateNumber>
+      <StateNumber>744</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
-    <column id="346" parent="275" name="year">
+    <column id="344" parent="273" name="year">
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>743</StateNumber>
+      <StateNumber>744</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="347" parent="275" name="month">
+    <column id="345" parent="273" name="month">
       <NotNull>1</NotNull>
       <Position>4</Position>
-      <StateNumber>743</StateNumber>
+      <StateNumber>744</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <column id="348" parent="275" name="days_taken">
-      <NotNull>1</NotNull>
+    <column id="346" parent="273" name="days_taken">
       <Position>5</Position>
-      <StateNumber>743</StateNumber>
+      <StateNumber>744</StateNumber>
       <StoredType>integer|0s</StoredType>
       <TypeId>23</TypeId>
     </column>
-    <foreign-key id="349" parent="275" name="fk_vacations_employee_id_employees">
+    <foreign-key id="347" parent="273" name="fk_vacations_employee_id_employees">
       <ColNames>employee_id</ColNames>
-      <ObjectId>16462</ObjectId>
-      <StateNumber>743</StateNumber>
+      <ObjectId>16457</ObjectId>
+      <StateNumber>744</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
-      <RefTableId>16419</RefTableId>
+      <RefTableId>16407</RefTableId>
     </foreign-key>
-    <index id="350" parent="275" name="vacations_pkey">
+    <index id="348" parent="273" name="pk_vacations">
       <ColNames>id</ColNames>
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16458</ObjectId>
+      <ObjectId>16453</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
+      <StateNumber>748</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="351" parent="275" name="uq_vacation">
+    <index id="349" parent="273" name="uq_vacation">
       <ColNames>employee_id
 year
 month</ColNames>
-      <ObjectId>16460</ObjectId>
-      <StateNumber>743</StateNumber>
+      <ObjectId>16455</ObjectId>
+      <StateNumber>748</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="352" parent="275" name="vacations_pkey">
-      <NameSurrogate>1</NameSurrogate>
-      <ObjectId>16459</ObjectId>
+    <index id="350" parent="273" name="ix_vacations_employee_id">
+      <ColNames>employee_id</ColNames>
+      <ObjectId>16462</ObjectId>
+      <StateNumber>748</StateNumber>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="351" parent="273" name="pk_vacations">
+      <ObjectId>16454</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>743</StateNumber>
-      <UnderlyingIndexId>16458</UnderlyingIndexId>
+      <StateNumber>744</StateNumber>
+      <UnderlyingIndexId>16453</UnderlyingIndexId>
     </key>
-    <key id="353" parent="275" name="uq_vacation">
-      <ObjectId>16461</ObjectId>
-      <StateNumber>743</StateNumber>
-      <UnderlyingIndexId>16460</UnderlyingIndexId>
+    <key id="352" parent="273" name="uq_vacation">
+      <ObjectId>16456</ObjectId>
+      <StateNumber>744</StateNumber>
+      <UnderlyingIndexId>16455</UnderlyingIndexId>
     </key>
   </database-model>
 </dataSource>

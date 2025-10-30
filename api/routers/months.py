@@ -1,14 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from db import models, session
+from api.schemas import MonthInfoResponse
 
 months_router = APIRouter(prefix="/months")
 
-@months_router.get("")
+@months_router.get("", response_model=list[MonthInfoResponse])
 def list_months(db: Session = Depends(session.get_db)):
     return db.query(models.MonthInfo).all()
 
-@months_router.get("/{month_id}")
+@months_router.get("/{month_id}", response_model=MonthInfoResponse)
 def get_month_by_id(month_id: str, db: Session = Depends(session.get_db)):
     month = db.query(models.MonthInfo).get(month_id)
     if not month:

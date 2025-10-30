@@ -1,14 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from db import models, session
+from api.schemas import VacationResponse
 
 vacations_router = APIRouter(prefix="/vacations")
 
-@vacations_router.get("")
+@vacations_router.get("", response_model=list[VacationResponse])
 def list_vacations(db: Session = Depends(session.get_db)):
     return db.query(models.Vacation).all()
 
-@vacations_router.get("/{vacation_id}")
+@vacations_router.get("/{vacation_id}", response_model=VacationResponse)
 def get_vacation_by_id(vacation_id: str, db: Session = Depends(session.get_db)):
     vacation = db.query(models.Vacation).get(vacation_id)
     if not vacation:

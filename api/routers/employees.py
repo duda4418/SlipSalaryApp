@@ -1,14 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from db import models, session
+from api.schemas import EmployeeResponse
 
 employees_router = APIRouter(prefix="/employees")
 
-@employees_router.get("")
+@employees_router.get("", response_model=list[EmployeeResponse])
 def list_employees(db: Session = Depends(session.get_db)):
     return db.query(models.Employee).all()
 
-@employees_router.get("/{employee_id}")
+@employees_router.get("/{employee_id}", response_model=EmployeeResponse)
 def get_employee_by_id(employee_id: str, db: Session = Depends(session.get_db)):
     employee = db.query(models.Employee).get(employee_id)
     if not employee:

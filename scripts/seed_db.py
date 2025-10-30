@@ -1,7 +1,7 @@
 """Script to populate the database with initial sample data."""
 
 from db.session import SessionLocal
-from db.models import User, Manager, Employee, MonthInfo, SalaryComponent, Vacation, Role, SalaryComponentType
+from db.models import User, Employee, MonthInfo, SalaryComponent, Vacation, SalaryComponentType
 from datetime import date
 
 from faker import Faker
@@ -19,46 +19,55 @@ def seed():
 	fake = Faker()
 	try:
 		# Delete all existing data (respecting FK constraints)
-		db.execute(text('TRUNCATE TABLE salary_components, vacations, employees, managers, users, months RESTART IDENTITY CASCADE;'))
+		db.execute(text('TRUNCATE TABLE salary_components, vacations, employees, users, months RESTART IDENTITY CASCADE;'))
 		db.execute(text('TRUNCATE TABLE idempotency_keys, report_files RESTART IDENTITY CASCADE;'))
 		db.commit()
 
-		managers = []
-		# Create Managers and Users
+		employees = []
+		# Create manager employees (top-level, no manager)
 		for _ in range(NUM_MANAGERS):
 			user = User(
 				email=fake.unique.email(),
-				first_name=fake.first_name(),
-				last_name=fake.last_name(),
-				role=Role.MANAGER  # Use the correct enum value
+				password_hash=None,
+				is_active=True
 			)
 			db.add(user)
 			db.flush()
-			manager = Manager(user_id=user.id)
-			db.add(manager)
+			employee = Employee(
+				user_id=user.id,
+				first_name=fake.first_name(),
+				last_name=fake.last_name(),
+				email=user.email,
+				cnp=fake.unique.numerify(text='#############'),
+				hire_date=fake.date_between(start_date='-3y', end_date='today'),
+				base_salary=random.randint(7000, 12000),
+				manager_id=None
+			)
+			db.add(employee)
 			db.flush()
-			managers.append(manager)
+			employees.append(employee)
 
-		employees = []
-		# Create Employees and Users
+		# Create regular employees (assign random manager from above)
 		for _ in range(NUM_EMPLOYEES):
 			user = User(
 				email=fake.unique.email(),
-				first_name=fake.first_name(),
-				last_name=fake.last_name(),
-				cnp=fake.unique.numerify(text='#############'),
-				role=Role.EMPLOYEE  # Use the correct enum value
+				password_hash=None,
+				is_active=True
 			)
 			db.add(user)
 			db.flush()
-			manager = random.choice(managers)
+			manager = random.choice(employees[:NUM_MANAGERS])
 			hire_date = fake.date_between(start_date='-3y', end_date='today')
 			base_salary = random.randint(3000, 8000)
 			employee = Employee(
 				user_id=user.id,
-				manager_id=manager.id,
+				first_name=fake.first_name(),
+				last_name=fake.last_name(),
+				email=user.email,
+				cnp=fake.unique.numerify(text='#############'),
 				hire_date=hire_date,
-				base_salary=base_salary
+				base_salary=base_salary,
+				manager_id=manager.id
 			)
 			db.add(employee)
 			db.flush()

@@ -2,14 +2,15 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from db import models, session
+from api.schemas import UserResponse
 
 users_router = APIRouter(prefix="/users")
 
-@users_router.get("")
+@users_router.get("", response_model=list[UserResponse])
 def list_users(db: Session = Depends(session.get_db)):
     return db.query(models.User).all()
 
-@users_router.get("/{user_id}")
+@users_router.get("/{user_id}", response_model=UserResponse)
 def get_user_by_id(user_id: str, db: Session = Depends(session.get_db)):
     user = db.query(models.User).get(user_id)
     if not user:

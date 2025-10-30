@@ -1,14 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from db import models, session
+from api.schemas import SalaryComponentResponse
 
 salary_components_router = APIRouter(prefix="/salary_components")
 
-@salary_components_router.get("")
+@salary_components_router.get("", response_model=list[SalaryComponentResponse])
 def list_salary_components(db: Session = Depends(session.get_db)):
     return db.query(models.SalaryComponent).all()
 
-@salary_components_router.get("/{component_id}")
+@salary_components_router.get("/{component_id}", response_model=SalaryComponentResponse)
 def get_salary_component_by_id(component_id: str, db: Session = Depends(session.get_db)):
     component = db.query(models.SalaryComponent).get(component_id)
     if not component:
