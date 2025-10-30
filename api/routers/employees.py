@@ -1,20 +1,19 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from db import models, session
+from db import session
 from api.schemas import EmployeeResponse
+from services.employees_service import get_employees as svc_list_employees
+from services.employees_service import get_employee_by_id as svc_get_employee_by_id
 
 employees_router = APIRouter(prefix="/employees")
 
 @employees_router.get("", response_model=list[EmployeeResponse])
 def list_employees(db: Session = Depends(session.get_db)):
-    return db.query(models.Employee).all()
+    return svc_list_employees(db)
 
 @employees_router.get("/{employee_id}", response_model=EmployeeResponse)
-def get_employee_by_id(employee_id: str, db: Session = Depends(session.get_db)):
-    employee = db.query(models.Employee).get(employee_id)
-    if not employee:
-        raise HTTPException(status_code=404, detail="Employee not found")
-    return employee
+def get_employee_by_id_endpoint(employee_id: str, db: Session = Depends(session.get_db)):
+    return svc_get_employee_by_id(db, employee_id)
 
 @employees_router.post("")
 def create_employee():

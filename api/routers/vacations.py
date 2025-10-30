@@ -1,20 +1,19 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from db import models, session
+from db import session
 from api.schemas import VacationResponse
+from services.vacations_service import get_vacations as svc_list_vacations
+from services.vacations_service import get_vacation_by_id as svc_get_vacation_by_id
 
 vacations_router = APIRouter(prefix="/vacations")
 
 @vacations_router.get("", response_model=list[VacationResponse])
 def list_vacations(db: Session = Depends(session.get_db)):
-    return db.query(models.Vacation).all()
+    return svc_list_vacations(db)
 
 @vacations_router.get("/{vacation_id}", response_model=VacationResponse)
-def get_vacation_by_id(vacation_id: str, db: Session = Depends(session.get_db)):
-    vacation = db.query(models.Vacation).get(vacation_id)
-    if not vacation:
-        raise HTTPException(status_code=404, detail="Vacation not found")
-    return vacation
+def get_vacation_by_id_endpoint(vacation_id: str, db: Session = Depends(session.get_db)):
+    return svc_get_vacation_by_id(db, vacation_id)
 
 @vacations_router.post("")
 def create_vacation():
