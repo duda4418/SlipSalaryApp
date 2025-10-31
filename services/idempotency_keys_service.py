@@ -1,12 +1,23 @@
 from sqlalchemy.orm import Session
-from db import models
-from fastapi import HTTPException
+from db.repositories import (
+    repo_list_idempotency_keys,
+    repo_get_idempotency_key_by_id,
+    repo_create_idempotency_key,
+    repo_update_idempotency_key,
+    repo_delete_idempotency_key,
+)
 
 def get_idempotency_keys(db: Session):
-    return db.query(models.IdempotencyKey).all()
+    return repo_list_idempotency_keys(db)
 
 def get_idempotency_key_by_id(db: Session, key_id: str):
-    key = db.query(models.IdempotencyKey).get(key_id)
-    if not key:
-        raise HTTPException(status_code=404, detail="Idempotency key not found")
-    return key
+    return repo_get_idempotency_key_by_id(db, key_id)
+
+def create_idempotency_key(db: Session, data: dict):
+    return repo_create_idempotency_key(db, **data)
+
+def update_idempotency_key(db: Session, key_id: str, data: dict):
+    return repo_update_idempotency_key(db, key_id, **data)
+
+def delete_idempotency_key(db: Session, key_id: str):
+    return repo_delete_idempotency_key(db, key_id)
