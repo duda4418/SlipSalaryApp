@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from db import session
 from api.schemas import ReportFileResponse, ReportFileCreate, ReportFileUpdate
@@ -12,9 +12,11 @@ from services.reports_service import (
 
 reports_router = APIRouter(prefix="/reports")
 
+
 @reports_router.get("", response_model=list[ReportFileResponse])
 def list_report_files(db: Session = Depends(session.get_db)):
     return svc_list_report_files(db)
+
 
 @reports_router.get("/{report_id}", response_model=ReportFileResponse)
 def get_report_file_by_id_endpoint(report_id: str, db: Session = Depends(session.get_db)):
@@ -22,15 +24,14 @@ def get_report_file_by_id_endpoint(report_id: str, db: Session = Depends(session
 
 
 @reports_router.post("", response_model=ReportFileResponse)
-def create_report_file_endpoint(payload: ReportFileCreate, db: Session = Depends(session.get_db)):
-    report = svc_create_report_file(db, payload.model_dump())
-    return report
+def create_report_file_endpoint(report: ReportFileCreate, db: Session = Depends(session.get_db)):
+    return svc_create_report_file(db, report)
+
 
 @reports_router.put("/{report_id}", response_model=ReportFileResponse)
-def update_report_file_endpoint(report_id: str, payload: ReportFileUpdate, db: Session = Depends(session.get_db)):
-    data = {k: v for k, v in payload.model_dump().items() if v is not None}
-    report = svc_update_report_file(db, report_id, data)
-    return report
+def update_report_file_endpoint(report_id: str, report: ReportFileUpdate, db: Session = Depends(session.get_db)):
+    return svc_update_report_file(db, report_id, report)
+
 
 @reports_router.delete("/{report_id}")
 def delete_report_file_endpoint(report_id: str, db: Session = Depends(session.get_db)):
