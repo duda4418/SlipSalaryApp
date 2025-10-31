@@ -3,15 +3,7 @@ from db import models
 from sqlalchemy.exc import IntegrityError
 from fastapi import HTTPException
 
-# User repositories
-def repo_list_users(db: Session):
-	return db.query(models.User).all()
-
-def repo_get_user_by_id(db: Session, user_id: str):
-	user = db.get(models.User, user_id)
-	if not user:
-		raise HTTPException(status_code=404, detail="User not found")
-	return user
+# (User model removed - merged into Employee)
 
 # Employee repositories
 def repo_list_employees(db: Session):
@@ -57,40 +49,8 @@ def repo_delete_employee(db: Session, employee_id: str):
 	return {"deleted": True, "id": employee_id}
 
 ############################
-# User mutations
+# NOTE: User mutations removed
 ############################
-def repo_create_user(db: Session, **data):
-	user = models.User(**data)
-	db.add(user)
-	try:
-		db.commit()
-	except IntegrityError as e:
-		db.rollback()
-		raise HTTPException(status_code=400, detail="User violates unique constraint") from e
-	db.refresh(user)
-	return user
-
-def repo_update_user(db: Session, user_id: str, **data):
-	user = db.get(models.User, user_id)
-	if not user:
-		raise HTTPException(status_code=404, detail="User not found")
-	for k, v in data.items():
-		setattr(user, k, v)
-	try:
-		db.commit()
-	except IntegrityError as e:
-		db.rollback()
-		raise HTTPException(status_code=400, detail="User violates unique constraint") from e
-	db.refresh(user)
-	return user
-
-def repo_delete_user(db: Session, user_id: str):
-	user = db.get(models.User, user_id)
-	if not user:
-		raise HTTPException(status_code=404, detail="User not found")
-	db.delete(user)
-	db.commit()
-	return {"deleted": True, "id": user_id}
 
 ############################
 # SalaryComponent mutations

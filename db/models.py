@@ -14,23 +14,18 @@ class SalaryComponentType(enum.Enum):
     bonus = "bonus"
     adjustment = "adjustment"
 
-class User(Base):
-    __tablename__ = "users"
-    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    email: Mapped[str] = mapped_column(String(255), unique=True, index=True, nullable=False)
-    password_hash: Mapped[str] = mapped_column(String(255), nullable=True)  # demo can leave null
-    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-
-    employee: Mapped["Employee"] = relationship(back_populates="user", uselist=False)
-
 class Employee(Base):
     __tablename__ = "employees"
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    user_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"), unique=True, nullable=True)
+    # Auth / identity fields merged from User
+    email: Mapped[str] = mapped_column(String(255), unique=True, index=True, nullable=False)
+    password_hash: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    # Domain fields
     first_name: Mapped[str] = mapped_column(String(255), nullable=False)
     last_name: Mapped[str] = mapped_column(String(255), nullable=False)
-    email: Mapped[str] = mapped_column(String(255), unique=True, index=True, nullable=False)
     cnp: Mapped[str] = mapped_column(String(32), unique=True, nullable=False)
     hire_date: Mapped[date] = mapped_column(Date, nullable=False)
     base_salary: Mapped[float] = mapped_column(Numeric(12,2), nullable=False)
@@ -38,7 +33,6 @@ class Employee(Base):
     manager_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("employees.id"), nullable=True)
 
     # relations
-    user: Mapped["User | None"] = relationship(back_populates="employee")
     manager: Mapped["Employee | None"] = relationship(remote_side=[id], backref="subordinates")
     vacations: Mapped[list["Vacation"]] = relationship(back_populates="employee", cascade="all, delete-orphan")
     components: Mapped[list["SalaryComponent"]] = relationship(back_populates="employee", cascade="all, delete-orphan")

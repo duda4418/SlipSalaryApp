@@ -12,24 +12,16 @@ depends_on = None
 
 def upgrade():
 
-    # ### Create users table ###
-    op.create_table(
-        'users',
-        sa.Column('id', sa.UUID(as_uuid=True), primary_key=True, default=uuid.uuid4),
-        sa.Column('email', sa.String(255), unique=True, index=True, nullable=False),
-        sa.Column('password_hash', sa.String(255), nullable=True),
-        sa.Column('is_active', sa.Boolean(), default=True),
-        sa.Column('created_at', sa.DateTime(), default=sa.func.now()),
-    )
-
-    # ### Create employees table ###
+    # ### Create employees table (merged user/auth + domain fields) ###
     op.create_table(
         'employees',
         sa.Column('id', sa.UUID(as_uuid=True), primary_key=True, default=uuid.uuid4),
-        sa.Column('user_id', sa.UUID(as_uuid=True), sa.ForeignKey('users.id'), unique=True, nullable=True),
+        sa.Column('email', sa.String(255), unique=True, nullable=False),
+        sa.Column('password_hash', sa.String(255), nullable=True),
+        sa.Column('is_active', sa.Boolean(), server_default=sa.text('true')),
+        sa.Column('created_at', sa.DateTime(), server_default=sa.func.now()),
         sa.Column('first_name', sa.String(255), nullable=False),
         sa.Column('last_name', sa.String(255), nullable=False),
-        sa.Column('email', sa.String(255), unique=True, index=True, nullable=False),
         sa.Column('cnp', sa.String(32), unique=True, nullable=False),
         sa.Column('hire_date', sa.Date(), nullable=False),
         sa.Column('base_salary', sa.Numeric(12,2), nullable=False),
@@ -100,5 +92,4 @@ def downgrade():
     op.drop_table('vacations')
     op.drop_table('salary_components')
     op.drop_table('employees')
-    op.drop_table('users')
     # managers table is not recreated

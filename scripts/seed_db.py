@@ -1,7 +1,7 @@
 """Script to populate the database with initial sample data."""
 
 from db.session import SessionLocal
-from db.models import User, Employee, MonthInfo, SalaryComponent, Vacation, SalaryComponentType
+from db.models import Employee, MonthInfo, SalaryComponent, Vacation, SalaryComponentType
 from datetime import date
 
 from faker import Faker
@@ -19,25 +19,19 @@ def seed():
 	fake = Faker()
 	try:
 		# Delete all existing data (respecting FK constraints)
-		db.execute(text('TRUNCATE TABLE salary_components, vacations, employees, users, months RESTART IDENTITY CASCADE;'))
+		db.execute(text('TRUNCATE TABLE salary_components, vacations, employees, months RESTART IDENTITY CASCADE;'))
 		db.execute(text('TRUNCATE TABLE idempotency_keys, report_files RESTART IDENTITY CASCADE;'))
 		db.commit()
 
 		employees = []
 		# Create manager employees (top-level, no manager)
 		for _ in range(NUM_MANAGERS):
-			user = User(
+			employee = Employee(
 				email=fake.unique.email(),
 				password_hash=None,
-				is_active=True
-			)
-			db.add(user)
-			db.flush()
-			employee = Employee(
-				user_id=user.id,
+				is_active=True,
 				first_name=fake.first_name(),
 				last_name=fake.last_name(),
-				email=user.email,
 				cnp=fake.unique.numerify(text='#############'),
 				hire_date=fake.date_between(start_date='-3y', end_date='today'),
 				base_salary=random.randint(7000, 12000),
@@ -49,21 +43,15 @@ def seed():
 
 		# Create regular employees (assign random manager from above)
 		for _ in range(NUM_EMPLOYEES):
-			user = User(
-				email=fake.unique.email(),
-				password_hash=None,
-				is_active=True
-			)
-			db.add(user)
-			db.flush()
 			manager = random.choice(employees[:NUM_MANAGERS])
 			hire_date = fake.date_between(start_date='-3y', end_date='today')
 			base_salary = random.randint(3000, 8000)
 			employee = Employee(
-				user_id=user.id,
+				email=fake.unique.email(),
+				password_hash=None,
+				is_active=True,
 				first_name=fake.first_name(),
 				last_name=fake.last_name(),
-				email=user.email,
 				cnp=fake.unique.numerify(text='#############'),
 				hire_date=hire_date,
 				base_salary=base_salary,

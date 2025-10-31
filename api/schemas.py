@@ -4,49 +4,35 @@ from uuid import UUID
 from datetime import datetime, date
 
 
-class UserResponse(CamelModel):
-	id: UUID
-	email: str
-	password_hash: Optional[str]
-	is_active: bool
-	created_at: datetime
-
-class UserCreate(CamelModel):
-	email: str
-	password_hash: Optional[str] = None
-	is_active: Optional[bool] = True
-
-class UserUpdate(CamelModel):
-	email: Optional[str] = None
-	password_hash: Optional[str] = None
-	is_active: Optional[bool] = None
-
-
 class EmployeeResponse(CamelModel):
 	id: UUID
-	user_id: Optional[UUID]
+	email: str
+	is_active: bool
+	created_at: datetime
 	first_name: str
 	last_name: str
-	email: str
 	cnp: str
 	hire_date: date
 	base_salary: float
 	manager_id: Optional[UUID]
 
 class EmployeeCreate(CamelModel):
-	user_id: Optional[UUID] = None
+	email: str
+	password_hash: Optional[str] = None
+	is_active: Optional[bool] = True
 	first_name: str
 	last_name: str
-	email: str
 	cnp: str
 	hire_date: date
 	base_salary: float
 	manager_id: Optional[UUID] = None
 
 class EmployeeUpdate(CamelModel):
+	email: Optional[str] = None
+	password_hash: Optional[str] = None
+	is_active: Optional[bool] = None
 	first_name: Optional[str] = None
 	last_name: Optional[str] = None
-	email: Optional[str] = None
 	cnp: Optional[str] = None
 	hire_date: Optional[date] = None
 	base_salary: Optional[float] = None
