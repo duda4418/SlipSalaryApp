@@ -20,5 +20,13 @@ services:
       retries: 10
     restart: unless-stopped
 
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog_local
+    ports:
+      - "1025:1025"   # SMTP
+      - "8025:8025"   # Web UI
+    restart: unless-stopped
+
 volumes:
   pgdata:

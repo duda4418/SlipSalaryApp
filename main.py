@@ -5,6 +5,7 @@ from api.routers.health import health_router
 from api.routers.idempotency_keys import idempotency_router
 from api.routers.months import months_router
 from api.routers.reports import reports_router
+from api.routers.report_generation import report_generation_router
 from api.routers.salary_components import salary_components_router
 from api.routers.vacations import vacations_router
 
@@ -17,6 +18,7 @@ app.include_router(months_router, prefix="/api")
 app.include_router(vacations_router, prefix="/api")
 app.include_router(reports_router, prefix="/api")
 app.include_router(employees_router, prefix="/api")
+app.include_router(report_generation_router, prefix="/api")
 
 
 if __name__ == "__main__":

@@ -14,6 +14,14 @@ class Settings(BaseSettings):
 	PGPORT: int
 	LOG_LEVEL: str | None = None
 
+	# SMTP / Email settings (MailHog defaults)
+	SMTP_HOST: str = "localhost"
+	SMTP_PORT: int = 1025
+	SMTP_FROM: str = "david.serban@endava.com"
+	SMTP_TLS: bool = False  # MailHog doesn't require TLS
+	SMTP_USERNAME: str | None = None
+	SMTP_PASSWORD: str | None = None
+
 	@property
 	def DATABASE_URL(self) -> str:
 		"""Build the SQLAlchemy database URL from settings."""
