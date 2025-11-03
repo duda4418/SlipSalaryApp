@@ -21,6 +21,7 @@ class Employee(Base):
     email: Mapped[str] = mapped_column(String(255), unique=True, index=True, nullable=False)
     password_hash: Mapped[str | None] = mapped_column(String(255), nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    is_manager: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     # Domain fields
@@ -79,6 +80,18 @@ class ReportFile(Base):
     owner_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True)) # manager_id or employee_id depending on use
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     archived: Mapped[bool] = mapped_column(Boolean, default=False)
+
+class RefreshToken(Base):
+    __tablename__ = "refresh_tokens"
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    employee_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("employees.id"), index=True, nullable=False)
+    token_hash: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    expires_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    revoked: Mapped[bool] = mapped_column(Boolean, default=False)
+    replaced_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("refresh_tokens.id"), nullable=True)
+
+    employee: Mapped["Employee"] = relationship(backref="refresh_tokens")
 
 class MonthInfo(Base):
     __tablename__ = "months"

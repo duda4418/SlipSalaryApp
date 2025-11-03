@@ -8,6 +8,7 @@ class EmployeeResponse(CamelModel):
 	id: UUID
 	email: str
 	is_active: bool
+	is_manager: bool
 	created_at: datetime
 	first_name: str
 	last_name: str
@@ -20,6 +21,7 @@ class EmployeeCreate(CamelModel):
 	email: str
 	password_hash: Optional[str] = None
 	is_active: Optional[bool] = True
+	is_manager: Optional[bool] = False
 	first_name: str
 	last_name: str
 	cnp: str
@@ -31,6 +33,7 @@ class EmployeeUpdate(CamelModel):
 	email: Optional[str] = None
 	password_hash: Optional[str] = None
 	is_active: Optional[bool] = None
+	is_manager: Optional[bool] = None
 	first_name: Optional[str] = None
 	last_name: Optional[str] = None
 	cnp: Optional[str] = None

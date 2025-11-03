@@ -22,6 +22,12 @@ class Settings(BaseSettings):
 	SMTP_USERNAME: str | None = None
 	SMTP_PASSWORD: str | None = None
 
+	# JWT / Auth settings
+	JWT_SECRET_KEY: str = "dev-change-me"  # Replace in production
+	JWT_ALGORITHM: str = "HS256"
+	ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
+	REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
+
 	@property
 	def DATABASE_URL(self) -> str:
 		"""Build the SQLAlchemy database URL from settings."""

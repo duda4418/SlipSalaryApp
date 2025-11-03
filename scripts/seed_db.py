@@ -2,6 +2,7 @@
 
 from db.session import SessionLocal
 from db.models import Employee, MonthInfo, SalaryComponent, Vacation, SalaryComponentType
+from utils.security import hash_password
 from datetime import date
 
 from faker import Faker
@@ -25,11 +26,13 @@ def seed():
 
 		employees = []
 		# Create manager employees (top-level, no manager)
+		default_password = "Password123!"  # Dev default
 		for _ in range(NUM_MANAGERS):
 			employee = Employee(
 				email=fake.unique.email(),
-				password_hash=None,
+				password_hash=hash_password(default_password),
 				is_active=True,
+				is_manager=True,
 				first_name=fake.first_name(),
 				last_name=fake.last_name(),
 				cnp=fake.unique.numerify(text='#############'),
@@ -48,8 +51,9 @@ def seed():
 			base_salary = random.randint(3000, 8000)
 			employee = Employee(
 				email=fake.unique.email(),
-				password_hash=None,
+				password_hash=hash_password(default_password),
 				is_active=True,
+				is_manager=False,
 				first_name=fake.first_name(),
 				last_name=fake.last_name(),
 				cnp=fake.unique.numerify(text='#############'),

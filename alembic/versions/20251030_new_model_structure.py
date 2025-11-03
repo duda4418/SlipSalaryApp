@@ -19,6 +19,7 @@ def upgrade():
         sa.Column('email', sa.String(255), unique=True, nullable=False),
         sa.Column('password_hash', sa.String(255), nullable=True),
         sa.Column('is_active', sa.Boolean(), server_default=sa.text('true')),
+        sa.Column('is_manager', sa.Boolean(), server_default=sa.text('false'), nullable=False),
         sa.Column('created_at', sa.DateTime(), server_default=sa.func.now()),
         sa.Column('first_name', sa.String(255), nullable=False),
         sa.Column('last_name', sa.String(255), nullable=False),

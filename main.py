@@ -8,6 +8,7 @@ from api.routers.reports import reports_router
 from api.routers.report_generation import report_generation_router
 from api.routers.salary_components import salary_components_router
 from api.routers.vacations import vacations_router
+from api.routers.auth import auth_router
 
 app = fastapi.FastAPI()
 
@@ -19,6 +20,7 @@ app.include_router(vacations_router, prefix="/api")
 app.include_router(reports_router, prefix="/api")
 app.include_router(employees_router, prefix="/api")
 app.include_router(report_generation_router, prefix="/api")
+app.include_router(auth_router, prefix="/api")
 
 
 if __name__ == "__main__":
