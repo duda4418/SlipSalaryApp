@@ -9,8 +9,18 @@ from api.routers.report_generation import report_generation_router
 from api.routers.salary_components import salary_components_router
 from api.routers.vacations import vacations_router
 from api.routers.auth import auth_router
+from fastapi.middleware.cors import CORSMiddleware
 
 app = fastapi.FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,                # set True if you use cookies/Authorization
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],                   # or ["Content-Type", "Authorization"]
+    expose_headers=[],                     # add if you need to read custom headers on responses
+)
 
 app.include_router(health_router, prefix="/api")
 app.include_router(idempotency_router, prefix="/api")
