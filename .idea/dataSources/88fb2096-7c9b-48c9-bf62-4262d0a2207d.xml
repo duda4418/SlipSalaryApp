@@ -3,15 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.53">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <Grants>1||-9223372036854775808|c|G
-1||10|c|G
-1||10|C|G
-1||10|T|G
-4||-9223372036854775808|c|G
-4||10|c|G
-4||10|C|G
-4||10|T|G</Grants>
-      <IntrospectionStateNumber>735</IntrospectionStateNumber>
+      <IntrospectionStateNumber>753</IntrospectionStateNumber>
       <ServerVersion>16.10</ServerVersion>
       <StartupTime>1762161021</StartupTime>
       <TimeZones>true ACDT
@@ -712,7 +704,7 @@ false posixrules
 13276||10|C|G
 13276||-9223372036854775808|U|G
 13276||10|U|G</Grants>
-      <IntrospectionStateNumber>735</IntrospectionStateNumber>
+      <IntrospectionStateNumber>753</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
       <OwnerName>slip_salary_user</OwnerName>
     </database>
@@ -4132,11 +4124,11 @@ false posixrules
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <LastIntrospectionL1Xid>735</LastIntrospectionL1Xid>
-      <LastIntrospectionL2Xid>735</LastIntrospectionL2Xid>
-      <LastIntrospectionL3Xid>735</LastIntrospectionL3Xid>
+      <LastIntrospectionL1Xid>753</LastIntrospectionL1Xid>
+      <LastIntrospectionL2Xid>753</LastIntrospectionL2Xid>
+      <LastIntrospectionL3Xid>753</LastIntrospectionL3Xid>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2025-11-03.09:10:44</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-11-03.09:37:08</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>524</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>

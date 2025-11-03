@@ -2,12 +2,21 @@ from sqlalchemy.orm import Session
 from db import models
 from sqlalchemy.exc import IntegrityError
 from fastapi import HTTPException
+from datetime import datetime, timedelta, timezone
+import hashlib, uuid
+from core.settings import settings
 
 # (User model removed - merged into Employee)
 
 # Employee repositories
 def repo_list_employees(db: Session):
 	return db.query(models.Employee).all()
+
+def repo_get_employee_by_email(db: Session, email: str):
+	employee = db.query(models.Employee).filter(models.Employee.email == email).first()
+	if not employee:
+		return None
+	return employee
 
 def repo_get_employee_by_id(db: Session, employee_id: str):
 	employee = db.get(models.Employee, employee_id)
@@ -281,6 +290,68 @@ def repo_get_report_file_by_id(db: Session, report_id: str):
 	if not report:
 		raise HTTPException(status_code=404, detail="Report not found")
 	return report
+
+# RefreshToken repositories
+def repo_create_refresh_token(db: Session, **data):
+	token = models.RefreshToken(**data)
+	db.add(token)
+	db.commit()
+	db.refresh(token)
+	return token
+
+def repo_get_refresh_token_by_hash(db: Session, token_hash: str):
+	return db.query(models.RefreshToken).filter(models.RefreshToken.token_hash == token_hash).first()
+
+def repo_rotate_refresh_token(db: Session, old_token: models.RefreshToken, new_token: models.RefreshToken):
+	old_token.revoked = True
+	old_token.replaced_by = new_token.id
+	db.add(new_token)
+	db.commit()
+	db.refresh(new_token)
+	return new_token
+
+############################
+# Auth validation helpers
+############################
+def repo_validate_login(db: Session, email: str, password: str, verify_fn) -> models.Employee:
+	"""Validate login credentials and return employee or raise HTTP 401."""
+	user = repo_get_employee_by_email(db, email)
+	if not user or not user.password_hash or not verify_fn(password, user.password_hash):
+		raise HTTPException(status_code=401, detail="Invalid credentials")
+	if not user.is_active:
+		raise HTTPException(status_code=401, detail="Inactive user")
+	return user
+
+def repo_issue_refresh_token(db: Session, employee_id, raw_token: str, expires_at):
+	token_hash = hashlib.sha256(raw_token.encode()).hexdigest()
+	return repo_create_refresh_token(db, employee_id=employee_id, token_hash=token_hash, expires_at=expires_at)
+
+def repo_validate_refresh_token_and_get_user(db: Session, raw_token: str) -> tuple[models.Employee, models.RefreshToken]:
+	token_hash = hashlib.sha256(raw_token.encode()).hexdigest()
+	rt = repo_get_refresh_token_by_hash(db, token_hash)
+	if not rt or rt.revoked or rt.expires_at < datetime.now(timezone.utc):
+		raise HTTPException(status_code=401, detail="Invalid refresh token")
+	user = db.get(models.Employee, rt.employee_id)
+	if not user or not user.is_active:
+		raise HTTPException(status_code=401, detail="Inactive user")
+	return user, rt
+
+def repo_rotate_refresh_token_and_issue(db: Session, old_rt: models.RefreshToken, employee_id) -> str:
+	"""Rotate old refresh token and return new raw token."""
+	new_raw = f"{uuid.uuid4()}:{datetime.now(timezone.utc).timestamp()}"
+	new_hash = hashlib.sha256(new_raw.encode()).hexdigest()
+	new_rt = models.RefreshToken(
+		employee_id=employee_id,
+		token_hash=new_hash,
+		expires_at=datetime.now(timezone.utc) + timedelta(minutes=settings.REFRESH_TOKEN_EXPIRE_MINUTES),
+	)
+	old_rt = old_rt
+	old_rt.revoked = True
+	old_rt.replaced_by = new_rt.id
+	db.add(new_rt)
+	db.commit()
+	db.refresh(new_rt)
+	return new_raw
 
 ############################
 # Reporting helper queries
