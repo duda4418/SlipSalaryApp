@@ -68,6 +68,30 @@ def generate_manager_csv(db: Session, manager_id: UUID, year: int, month: int, i
     return report
 
 
+def generate_manager_csv_idempotent(db: Session, manager_id: UUID, year: int, month: int, include_bonuses: bool = True, idempotency_key: str | None = None) -> dict:
+    """Idempotent wrapper for generate_manager_csv.
+
+    Returns a dict mirroring previous createAggregatedEmployeeData response plus idempotency metadata.
+    """
+    endpoint_sig = f"generate_manager_csv:{manager_id}:{year}-{month:02d}:bonuses{int(include_bonuses)}"
+    if idempotency_key:
+        key_obj = repo_get_idempotency_key_by_key(db, idempotency_key)
+        if key_obj:
+            if key_obj.endpoint == endpoint_sig and key_obj.status == 'succeeded':
+                return {"status": "cached", "idempotent": True, "filePath": key_obj.result_path}
+            if key_obj.endpoint == endpoint_sig and key_obj.status == 'started':
+                from fastapi import HTTPException
+                raise HTTPException(status_code=409, detail="Operation already in progress")
+        else:
+            repo_create_idempotency_key(db, key=idempotency_key, endpoint=endpoint_sig, status='started')
+    report = generate_manager_csv(db, manager_id, year, month, include_bonuses=include_bonuses)
+    if idempotency_key:
+        key_obj = repo_get_idempotency_key_by_key(db, idempotency_key)
+        if key_obj:
+            repo_mark_idempotency_key_succeeded(db, key_obj, result_path=report.path)
+    return {"status": "generated", "fileId": str(report.id), "filePath": report.path, "archived": report.archived, "idempotent": bool(idempotency_key)}
+
+
 def send_manager_csv(db: Session, manager_id: UUID, year: int, month: int, idempotency_key: str | None = None) -> dict:
     # Idempotency check
     if idempotency_key:
@@ -158,6 +182,32 @@ def generate_employee_pdfs(db: Session, manager_id: UUID, year: int, month: int,
         report = repo_create_report_file(db, path=pdf_path, type='pdf', owner_id=e.id, archived=False, content=pdf_bytes)
         file_ids.append(str(report.id))
     return {"generated": len(file_ids), "fileIds": file_ids}
+
+
+def generate_employee_pdfs_idempotent(db: Session, manager_id: UUID, year: int, month: int, overwrite: bool=False, idempotency_key: str | None = None) -> dict:
+    """Idempotent wrapper for generate_employee_pdfs.
+
+    We do not archive at generation time; cached responses omit fileIds re-scan for simplicity.
+    """
+    endpoint_sig = f"generate_employee_pdfs:{manager_id}:{year}-{month:02d}:overwrite{int(overwrite)}"
+    if idempotency_key:
+        key_obj = repo_get_idempotency_key_by_key(db, idempotency_key)
+        if key_obj:
+            if key_obj.endpoint == endpoint_sig and key_obj.status == 'succeeded':
+                return {"status": "cached", "idempotent": True}
+            if key_obj.endpoint == endpoint_sig and key_obj.status == 'started':
+                from fastapi import HTTPException
+                raise HTTPException(status_code=409, detail="Operation already in progress")
+        else:
+            repo_create_idempotency_key(db, key=idempotency_key, endpoint=endpoint_sig, status='started')
+    result = generate_employee_pdfs(db, manager_id, year, month, overwrite=overwrite)
+    if idempotency_key:
+        key_obj = repo_get_idempotency_key_by_key(db, idempotency_key)
+        if key_obj:
+            # No specific path to store; mark succeeded with None
+            repo_mark_idempotency_key_succeeded(db, key_obj, result_path=None)
+    result.update({"status": "generated", "idempotent": bool(idempotency_key)})
+    return result
 
 
 def send_employee_pdfs(db: Session, manager_id: UUID, year: int, month: int, regenerate_missing: bool=False, idempotency_key: str | None = None) -> dict:

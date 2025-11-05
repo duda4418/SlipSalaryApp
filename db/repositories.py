@@ -5,6 +5,7 @@ from fastapi import HTTPException
 from datetime import datetime, timedelta, timezone
 import hashlib, uuid
 from core.settings import settings
+from sqlalchemy import func, case, literal_column, select
 
 
 # (User model removed - merged into Employee)
@@ -217,11 +218,44 @@ def repo_delete_idempotency_key(db: Session, key_id: str):
 # ReportFile mutations
 ############################
 def repo_create_report_file(db: Session, **data):
-	# Normalize required inline content metadata if content provided
+	"""Create a ReportFile unless one already exists for the same path.
+
+	If an existing record is found, update selected fields (content + metadata) and reuse it.
+	Prevents duplicate rows pointing to the same file path when generation is invoked multiple times.
+	"""
+	path = data.get('path')
+	if path:
+		existing = db.query(models.ReportFile).filter(models.ReportFile.path == path).first()
+	else:
+		existing = None
 	content = data.get('content')
+	if existing:
+		# Update inline content if new content provided
+		if content is not None:
+			existing.content = content
+			existing.size_bytes = len(content)
+			# Update/guess content_type if provided or missing
+			ctype = data.get('content_type')
+			if ctype:
+				existing.content_type = ctype
+			elif not existing.content_type:
+				ftype = data.get('type', existing.type)
+				mime_map = {'csv': 'text/csv', 'pdf': 'application/pdf', 'zip': 'application/zip'}
+				existing.content_type = mime_map.get(ftype, 'application/octet-stream')
+		# Optionally sync type/owner/archive flags if they differ
+		for field in ['type','owner_id','archived']:
+			if field in data and getattr(existing, field) != data[field]:
+				setattr(existing, field, data[field])
+		try:
+			db.commit()
+		except IntegrityError as e:
+			db.rollback()
+			raise HTTPException(status_code=400, detail="Report file violates unique constraint") from e
+		db.refresh(existing)
+		return existing
+	# No existing record; proceed with creation
 	if content is not None:
 		data.setdefault('size_bytes', len(content))
-		# Provide a basic content_type guess if missing
 		if 'content_type' not in data or data['content_type'] is None:
 			ftype = data.get('type')
 			mime_map = {'csv': 'text/csv', 'pdf': 'application/pdf', 'zip': 'application/zip'}
@@ -436,29 +470,28 @@ def repo_aggregate_employee_month_summary(db: Session, manager_id: str, year: in
 	"""Return list of dicts with per-employee aggregated financial data for a manager.
 	Fields: employee_id, first_name, last_name, cnp, base_salary, bonus_total, adjustment_total, vacation_days
 	"""
-	from sqlalchemy import func, case, literal_column
-	# Subordinates of manager
-	subq_emps = db.query(models.Employee.id).filter(models.Employee.manager_id == manager_id).subquery()
-	# Components aggregation
-	comp_aggr = db.query(
+	# Explicit selectable of subordinate employee IDs to avoid coercion warnings
+	subq_emps = select(models.Employee.id).where(models.Employee.manager_id == manager_id).subquery()
+	# Aggregated salary components (bonus, adjustment) per employee
+	comp_aggr = select(
 		models.SalaryComponent.employee_id.label('employee_id'),
 		func.sum(case((models.SalaryComponent.type == models.SalaryComponentType.bonus, models.SalaryComponent.amount), else_=0)).label('bonus_total'),
 		func.sum(case((models.SalaryComponent.type == models.SalaryComponentType.adjustment, models.SalaryComponent.amount), else_=0)).label('adjustment_total')
-	).filter(
-		models.SalaryComponent.employee_id.in_(subq_emps),
+	).where(
+		models.SalaryComponent.employee_id.in_(select(subq_emps.c.id)),
 		models.SalaryComponent.year == year,
 		models.SalaryComponent.month == month
 	).group_by(models.SalaryComponent.employee_id).subquery()
-	# Vacation aggregation
-	vac_aggr = db.query(
+	# Aggregated vacation days per employee
+	vac_aggr = select(
 		models.Vacation.employee_id.label('employee_id'),
 		func.sum(models.Vacation.days_taken).label('vacation_days')
-	).filter(
-		models.Vacation.employee_id.in_(subq_emps),
+	).where(
+		models.Vacation.employee_id.in_(select(subq_emps.c.id)),
 		models.Vacation.year == year,
 		models.Vacation.month == month
 	).group_by(models.Vacation.employee_id).subquery()
-	# Join employees with aggregates
+	# Employees joined (LEFT OUTER) with component and vacation aggregates to avoid cartesian products
 	query = db.query(
 		models.Employee.id.label('employee_id'),
 		models.Employee.first_name,
@@ -468,7 +501,8 @@ def repo_aggregate_employee_month_summary(db: Session, manager_id: str, year: in
 		func.coalesce(comp_aggr.c.bonus_total, literal_column('0')).label('bonus_total'),
 		func.coalesce(comp_aggr.c.adjustment_total, literal_column('0')).label('adjustment_total'),
 		func.coalesce(vac_aggr.c.vacation_days, literal_column('0')).label('vacation_days')
-	).filter(models.Employee.id.in_(subq_emps))
+	).filter(models.Employee.id.in_(select(subq_emps.c.id)))
+	query = query.outerjoin(comp_aggr, models.Employee.id == comp_aggr.c.employee_id).outerjoin(vac_aggr, models.Employee.id == vac_aggr.c.employee_id)
 	results = []
 	for row in query.all():
 		results.append({
