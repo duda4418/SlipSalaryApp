@@ -9,6 +9,7 @@ from services.employees_service import (
     create_employee as svc_create_employee,
     update_employee as svc_update_employee,
     delete_employee as svc_delete_employee,
+    get_employees_by_manager as svc_get_employees_by_manager,
 )
 
 employees_router = APIRouter(prefix="/employees", dependencies=[Depends(require_manager)])
@@ -17,6 +18,10 @@ employees_router = APIRouter(prefix="/employees", dependencies=[Depends(require_
 @employees_router.get("", response_model=list[EmployeeResponse])
 def list_employees(db: Session = Depends(session.get_db)):
     return svc_list_employees(db)
+
+@employees_router.get("/{manager_id}", response_model=list[EmployeeResponse])
+def list_employees_by_manager(manager_id: str, db: Session = Depends(session.get_db)):
+    return svc_get_employees_by_manager(db, manager_id)
 
 
 @employees_router.get("/{employee_id}", response_model=EmployeeResponse)

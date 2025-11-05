@@ -13,6 +13,13 @@ from core.settings import settings
 def repo_list_employees(db: Session):
 	return db.query(models.Employee).all()
 
+def repo_get_employees_by_manager(db: Session, manager_id: str):
+	"""Return all employees whose manager_id matches the provided manager.
+
+	Does not include the manager themselves (unless they are incorrectly set as their own manager).
+	"""
+	return db.query(models.Employee).filter(models.Employee.manager_id == manager_id).all()
+
 def repo_get_employee_by_email(db: Session, email: str):
 	employee = db.query(models.Employee).filter(models.Employee.email == email).first()
 	if not employee:
