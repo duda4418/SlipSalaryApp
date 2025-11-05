@@ -6,6 +6,7 @@ from datetime import datetime, timedelta, timezone
 import hashlib, uuid
 from core.settings import settings
 
+
 # (User model removed - merged into Employee)
 
 # Employee repositories
@@ -289,6 +290,18 @@ def repo_get_idempotency_key_by_id(db: Session, key_id: str):
 	if not key:
 		raise HTTPException(status_code=404, detail="Idempotency key not found")
 	return key
+
+def repo_get_idempotency_key_by_key(db: Session, key: str):
+	return db.query(models.IdempotencyKey).filter(models.IdempotencyKey.key == key).first()
+
+def repo_mark_idempotency_key_succeeded(db: Session, key_obj: models.IdempotencyKey, result_path: str | None = None):
+	key_obj.status = 'succeeded'
+	if result_path:
+		key_obj.result_path = result_path
+	key_obj.updated_at = datetime.now(timezone.utc)
+	db.commit()
+	db.refresh(key_obj)
+	return key_obj
 
 # ReportFile repositories
 def repo_list_report_files(db: Session):

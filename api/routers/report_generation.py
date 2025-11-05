@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Header
 from sqlalchemy.orm import Session
 from uuid import UUID
 from db import session
@@ -18,13 +18,13 @@ def create_aggregated_employee_data(managerId: UUID, year: int, month: int, incl
     return {"fileId": str(report.id), "path": report.path, "archived": report.archived}
 
 @report_generation_router.post("/sendAggregatedEmployeeData")
-def send_aggregated_employee_data(managerId: UUID, year: int, month: int, db: Session = Depends(session.get_db), _: None = Depends(require_manager)):
-    return send_manager_csv(db, managerId, year, month)
+def send_aggregated_employee_data(managerId: UUID, year: int, month: int, idempotency_key: str | None = Header(default=None, alias="Idempotency-Key"), db: Session = Depends(session.get_db), _: None = Depends(require_manager)):
+    return send_manager_csv(db, managerId, year, month, idempotency_key=idempotency_key)
 
 @report_generation_router.post("/createPdfForEmployees")
 def create_pdf_for_employees(managerId: UUID, year: int, month: int, overwriteExisting: bool = False, db: Session = Depends(session.get_db), _: None = Depends(require_manager)):
     return generate_employee_pdfs(db, managerId, year, month, overwrite=overwriteExisting)
 
 @report_generation_router.post("/sendPdfToEmployees")
-def send_pdf_to_employees(managerId: UUID, year: int, month: int, regenerateMissing: bool = False, db: Session = Depends(session.get_db), _: None = Depends(require_manager)):
-    return send_employee_pdfs(db, managerId, year, month, regenerate_missing=regenerateMissing)
+def send_pdf_to_employees(managerId: UUID, year: int, month: int, regenerateMissing: bool = False, idempotency_key: str | None = Header(default=None, alias="Idempotency-Key"), db: Session = Depends(session.get_db), _: None = Depends(require_manager)):
+    return send_employee_pdfs(db, managerId, year, month, regenerate_missing=regenerateMissing, idempotency_key=idempotency_key)
