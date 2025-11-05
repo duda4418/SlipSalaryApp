@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from auth.deps import require_manager
 from sqlalchemy.orm import Session
 from db import session
 from api.schemas import VacationResponse, VacationCreate, VacationUpdate
@@ -10,7 +11,7 @@ from services.vacations_service import (
     delete_vacation as svc_delete_vacation,
 )
 
-vacations_router = APIRouter(prefix="/vacations")
+vacations_router = APIRouter(prefix="/vacations", dependencies=[Depends(require_manager)])
 
 
 @vacations_router.get("", response_model=list[VacationResponse])

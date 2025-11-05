@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from auth.deps import require_manager
 from sqlalchemy.orm import Session
 from db import session
 from api.schemas import SalaryComponentResponse, SalaryComponentCreate, SalaryComponentUpdate
@@ -10,7 +11,7 @@ from services.salary_components_service import (
     delete_salary_component as svc_delete_salary_component,
 )
 
-salary_components_router = APIRouter(prefix="/salary_components")
+salary_components_router = APIRouter(prefix="/salary_components", dependencies=[Depends(require_manager)])
 
 
 @salary_components_router.get("", response_model=list[SalaryComponentResponse])

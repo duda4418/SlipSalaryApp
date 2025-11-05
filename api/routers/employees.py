@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from auth.deps import require_manager
 from sqlalchemy.orm import Session
 from db import session
 from api.schemas import EmployeeResponse, EmployeeCreate, EmployeeUpdate
@@ -10,7 +11,7 @@ from services.employees_service import (
     delete_employee as svc_delete_employee,
 )
 
-employees_router = APIRouter(prefix="/employees")
+employees_router = APIRouter(prefix="/employees", dependencies=[Depends(require_manager)])
 
 
 @employees_router.get("", response_model=list[EmployeeResponse])

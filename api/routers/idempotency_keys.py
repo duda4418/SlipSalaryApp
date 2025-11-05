@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from auth.deps import require_manager
 from sqlalchemy.orm import Session
 from db import session
 from api.schemas import IdempotencyKeyResponse, IdempotencyKeyCreate, IdempotencyKeyUpdate
@@ -10,7 +11,7 @@ from services.idempotency_keys_service import (
     delete_idempotency_key as svc_delete_idempotency_key,
 )
 
-idempotency_router = APIRouter(prefix="/idempotency_keys")
+idempotency_router = APIRouter(prefix="/idempotency_keys", dependencies=[Depends(require_manager)])
 
 
 @idempotency_router.get("", response_model=list[IdempotencyKeyResponse])

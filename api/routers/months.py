@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from auth.deps import require_manager
 from sqlalchemy.orm import Session
 from db import session
 from api.schemas import MonthInfoResponse, MonthInfoCreate, MonthInfoUpdate
@@ -10,7 +11,7 @@ from services.months_service import (
     delete_month as svc_delete_month,
 )
 
-months_router = APIRouter(prefix="/months")
+months_router = APIRouter(prefix="/months", dependencies=[Depends(require_manager)])
 
 
 @months_router.get("", response_model=list[MonthInfoResponse])

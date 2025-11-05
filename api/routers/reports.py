@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from auth.deps import require_manager
 from fastapi.responses import StreamingResponse, FileResponse
 from sqlalchemy.orm import Session
 from db import session
@@ -12,7 +13,7 @@ from services.reports_service import (
 )
 import os
 
-reports_router = APIRouter(prefix="/reports")
+reports_router = APIRouter(prefix="/reports", dependencies=[Depends(require_manager)])
 
 
 def _normalize_report_id(raw: str) -> str:
