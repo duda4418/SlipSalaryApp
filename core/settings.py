@@ -1,6 +1,7 @@
 """Application settings and environment configuration."""
 
 from pydantic_settings import BaseSettings
+from pathlib import Path
 
 
 class Settings(BaseSettings):
@@ -18,7 +19,7 @@ class Settings(BaseSettings):
 	SMTP_HOST: str = "localhost"
 	SMTP_PORT: int = 1025
 	SMTP_FROM: str = "david.serban@endava.com"
-	SMTP_TLS: bool = False  # MailHog doesn't require TLS
+	SMTP_TLS: bool = False
 	SMTP_USERNAME: str | None = None
 	SMTP_PASSWORD: str | None = None
 
@@ -37,7 +38,7 @@ class Settings(BaseSettings):
 		)
 
 	class Config:
-		env_file = ".env"
+		env_file = Path(__file__).resolve().parent.parent / ".env" 
 		extra = "ignore"
 
 

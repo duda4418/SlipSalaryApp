@@ -18,9 +18,19 @@
    Response: { generated, fileIds }
 
 4. POST /api/reports_generation/sendPdfToEmployees
-   Email PDFs to each employee then archive them into a ZIP.
+   Email PDFs to each employee then archive them into a ZIP (dev/local SMTP, e.g. MailHog).
    Query Params: managerId, year, month, regenerateMissing (optional)
    Response: { sent, archiveZipId, archivePath }
+
+5. POST /api/reports_generation/sendPdfToEmployeesLive
+   Same behaviour as #4 but enforces production SMTP configuration (non-local host + TLS or auth).
+   Query Params: managerId, year, month, regenerateMissing (optional)
+   Response: { sent, archivedPdfs, archiveZipId, archiveZipPath, status: "sent_live" }
+
+6. POST /api/reports_generation/sendAggregatedEmployeeDataLive
+   Production variant of manager CSV sending (non-local SMTP safeguards).
+   Query Params: managerId, year, month
+   Response: { status: "sent_live", fileId, archived, archivePath }
 
 ## CSV Columns
 employee_id, first_name, last_name, cnp, gross_salary_month, base_salary, bonus_total, adjustment_total, working_days, vacation_days
@@ -37,7 +47,7 @@ Each PDF is protected using the employee's CNP.
 reportlab, PyPDF2 for PDF generation.
 
 ## Future Improvements
-- Real email integration (SMTP) ✅ Implemented via MailHog
+- Production email hardening (rate limiting, bounce tracking) ⬅ next
 - Role-based authorization for manager triggers
 - Remove password_hash from public Employee responses
 - Add tests for report generation
@@ -59,22 +69,35 @@ docker compose up -d
 Access the MailHog UI to view captured emails and attachments.
 
 ### Environment Variables
-The following settings (with defaults) were added to `Settings`:
+The following settings (with defaults) are defined in `core/settings.py`:
 ```
 SMTP_HOST=localhost
 SMTP_PORT=1025
-SMTP_FROM=noreply@example.com
+SMTP_FROM=david.serban@endava.com
 SMTP_TLS=False
 SMTP_USERNAME=
 SMTP_PASSWORD=
 ```
-Override them in `.env` if needed.
+Override them in `.env` for production, e.g.:
+```
+SMTP_HOST=smtp.sendgrid.net
+SMTP_PORT=587
+SMTP_FROM=payroll@example.com
+SMTP_TLS=True
+SMTP_USERNAME=apikey
+SMTP_PASSWORD=SG.xxxxxx
+```
 
 ### Attachment Notes
 CSV, PDF, and ZIP files are attached using a generic `application/octet-stream` MIME type for simplicity.
 
 ### Error Handling
 Failures when reading attachments or sending will be logged; endpoints still return success for unrelated attachments.
+
+### Live Email Endpoint
+Use `POST /api/reports_generation/sendPdfToEmployeesLive` only after configuring real SMTP. Safeguards:
+- Rejects if SMTP_HOST is localhost / 127.0.0.1
+- Requires TLS or username/password
 
 ### Production Reminder
 Replace MailHog with a real provider (e.g., SES, SendGrid) and enable TLS/auth in production. Add rate limiting & auditing.

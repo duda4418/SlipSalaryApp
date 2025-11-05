@@ -20,7 +20,7 @@ from db.repositories import (
 from utils.files import write_csv, zip_paths, ensure_dir
 import mimetypes
 from utils.pdf import build_salary_pdf
-from services.email_service import send_email
+from services.email_service import send_email, send_email_dev
 
 BASE_REPORT_DIR = "reports"
 
@@ -110,7 +110,8 @@ def send_manager_csv(db: Session, manager_id: UUID, year: int, month: int, idemp
 
     report = generate_manager_csv(db, manager_id, year, month)
     manager = _get_manager(db, manager_id)
-    send_email(manager.email, f"Monthly CSV {year}-{month:02d}", "Attached CSV report", [report.path])
+    # Dev/local send uses forced MailHog settings via send_email_dev
+    send_email_dev(manager.email, f"Monthly CSV {year}-{month:02d}", "Attached CSV report", [report.path])
 
     archive_dir = os.path.join(BASE_REPORT_DIR, 'archives', f"{year}-{month:02d}")
     ensure_dir(archive_dir)
@@ -126,6 +127,51 @@ def send_manager_csv(db: Session, manager_id: UUID, year: int, month: int, idemp
         if key_obj:
             repo_mark_idempotency_key_succeeded(db, key_obj, result_path=archive_path)
     return {"status":"sent","fileId": str(report.id), "archived": True, "archivePath": archive_path, "idempotent": bool(idempotency_key)}
+
+
+def send_manager_csv_live(db: Session, manager_id: UUID, year: int, month: int, idempotency_key: str | None = None) -> dict:
+    """Live (production) variant of send_manager_csv.
+
+    Safeguards:
+    - Rejects if SMTP_HOST is localhost/127.0.0.1 (indicates dev MailHog).
+    - Requires TLS or SMTP auth credentials to help prevent misconfiguration.
+    Idempotency uses distinct endpoint signature to avoid collisions with dev variant.
+    """
+    from core.settings import settings
+    if settings.SMTP_HOST in {"localhost", "127.0.0.1"}:
+        raise HTTPException(status_code=400, detail="SMTP_HOST points to localhost; configure real SMTP before using live endpoint.")
+    if not settings.SMTP_TLS and not (settings.SMTP_USERNAME and settings.SMTP_PASSWORD):
+        raise HTTPException(status_code=400, detail="Production sending requires TLS or SMTP auth credentials.")
+
+    endpoint_sig = f"send_manager_csv_live:{manager_id}:{year}-{month:02d}"
+    if idempotency_key:
+        key_obj = repo_get_idempotency_key_by_key(db, idempotency_key)
+        if key_obj:
+            if key_obj.endpoint == endpoint_sig and key_obj.status == 'succeeded':
+                return {"status": "cached", "idempotent": True, "archivePath": key_obj.result_path}
+            if key_obj.endpoint == endpoint_sig and key_obj.status == 'started':
+                raise HTTPException(status_code=409, detail="Operation already in progress")
+        else:
+            repo_create_idempotency_key(db, key=idempotency_key, endpoint=endpoint_sig, status='started')
+
+    report = generate_manager_csv(db, manager_id, year, month)
+    manager = _get_manager(db, manager_id)
+    send_email(manager.email, f"Monthly CSV {year}-{month:02d}", "Attached CSV report", [report.path])
+
+    archive_dir = os.path.join(BASE_REPORT_DIR, 'archives', f"{year}-{month:02d}")
+    ensure_dir(archive_dir)
+    archive_path = os.path.join(archive_dir, os.path.basename(report.path))
+    try:
+        shutil.copy2(report.path, archive_path)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to archive CSV: {e}")
+    report = repo_update_report_file(db, str(report.id), archived=True, path=archive_path)
+
+    if idempotency_key:
+        key_obj = repo_get_idempotency_key_by_key(db, idempotency_key)
+        if key_obj:
+            repo_mark_idempotency_key_succeeded(db, key_obj, result_path=archive_path)
+    return {"status":"sent_live","fileId": str(report.id), "archived": True, "archivePath": archive_path, "idempotent": bool(idempotency_key)}
 
 
 def generate_employee_pdfs(db: Session, manager_id: UUID, year: int, month: int, overwrite: bool=False) -> dict:
@@ -230,7 +276,8 @@ def send_employee_pdfs(db: Session, manager_id: UUID, year: int, month: int, reg
     for e in subs:
         pdf_path = os.path.join(BASE_REPORT_DIR, 'pdf', f"{year}-{month:02d}", f"{e.id}.pdf")
         if os.path.exists(pdf_path):
-            send_email(e.email, f"Salary Slip {year}-{month:02d}", "Attached PDF salary slip", [pdf_path])
+            # Dev/local send uses MailHog override
+            send_email_dev(e.email, f"Salary Slip {year}-{month:02d}", "Attached PDF salary slip", [pdf_path])
             pdf_paths.append(pdf_path)
             sent += 1
     archive_root = os.path.join(BASE_REPORT_DIR, 'archives', f"{year}-{month:02d}")
@@ -258,3 +305,72 @@ def send_employee_pdfs(db: Session, manager_id: UUID, year: int, month: int, reg
         if key_obj:
             repo_mark_idempotency_key_succeeded(db, key_obj, result_path=zip_path)
     return {"sent": sent, "archivedPdfs": archived_count, "archiveZipId": str(archive_report.id), "archiveZipPath": zip_path, "idempotent": bool(idempotency_key)}
+
+
+def send_employee_pdfs_live(db: Session, manager_id: UUID, year: int, month: int, regenerate_missing: bool=False, idempotency_key: str | None = None) -> dict:
+
+    """Send employee PDFs using production SMTP settings instead of local MailHog.
+
+    This mirrors send_employee_pdfs but adds a couple of safeguards:
+    - Rejects if SMTP_HOST still points to localhost (likely MailHog).
+    - Requires either TLS enabled or explicit username/password for auth.
+    - Emits clearer status codes when configuration is incomplete.
+
+    Idempotency behaviour mirrors the original implementation (different endpoint signature).
+    """
+    from core.settings import settings
+    if settings.SMTP_HOST in {"localhost", "127.0.0.1"}:
+        raise HTTPException(status_code=400, detail="SMTP_HOST points to localhost; configure real SMTP before using live endpoint.")
+    if not settings.SMTP_TLS and not (settings.SMTP_USERNAME and settings.SMTP_PASSWORD):
+        raise HTTPException(status_code=400, detail="Production sending requires TLS or SMTP auth credentials.")
+
+    # Idempotency check (distinct endpoint signature to avoid collision with dev/local endpoint)
+    endpoint_sig = f"send_employee_pdfs_live:{manager_id}:{year}-{month:02d}"
+    if idempotency_key:
+        key_obj = repo_get_idempotency_key_by_key(db, idempotency_key)
+        if key_obj:
+            if key_obj.endpoint == endpoint_sig and key_obj.status == 'succeeded':
+                return {"status": "cached", "idempotent": True, "archiveZipPath": key_obj.result_path}
+            if key_obj.endpoint == endpoint_sig and key_obj.status == 'started':
+                raise HTTPException(status_code=409, detail="Operation already in progress")
+        else:
+            repo_create_idempotency_key(db, key=idempotency_key, endpoint=endpoint_sig, status='started')
+
+    # Re-use existing logic: we regenerate missing PDFs optionally
+    gen = generate_employee_pdfs(db, manager_id, year, month, overwrite=regenerate_missing)
+    manager = _get_manager(db, manager_id)
+    subs = _get_subordinates(db, manager_id)
+    sent = 0
+    pdf_paths = []
+    for e in subs:
+        pdf_path = os.path.join(BASE_REPORT_DIR, 'pdf', f"{year}-{month:02d}", f"{e.id}.pdf")
+        if os.path.exists(pdf_path):
+            # Same send_email, but at this point settings should be pointing to real SMTP
+            send_email(e.email, f"Salary Slip {year}-{month:02d}", "Attached PDF salary slip", [pdf_path])
+            pdf_paths.append(pdf_path)
+            sent += 1
+    archive_root = os.path.join(BASE_REPORT_DIR, 'archives', f"{year}-{month:02d}")
+    archive_pdfs_dir = os.path.join(archive_root, 'pdfs')
+    ensure_dir(archive_pdfs_dir)
+    archived_count = 0
+    from db.repositories import repo_get_report_file_by_path, repo_update_report_file
+    for p in pdf_paths:
+        archive_path = os.path.join(archive_pdfs_dir, os.path.basename(p))
+        try:
+            shutil.copy2(p, archive_path)
+            archived_count += 1
+            report_rec = repo_get_report_file_by_path(db, p)
+            if report_rec:
+                repo_update_report_file(db, str(report_rec.id), archived=True, path=archive_path)
+        except Exception:
+            pass
+    zip_path = os.path.join(archive_root, f"{manager_id}_pdfs_live.zip")
+    zip_paths(pdf_paths, zip_path)
+    with open(zip_path, 'rb') as f:
+        zip_bytes = f.read()
+    archive_report = repo_create_report_file(db, path=zip_path, type='zip', owner_id=manager_id, archived=True, content=zip_bytes)
+    if idempotency_key:
+        key_obj = repo_get_idempotency_key_by_key(db, idempotency_key)
+        if key_obj:
+            repo_mark_idempotency_key_succeeded(db, key_obj, result_path=zip_path)
+    return {"sent": sent, "archivedPdfs": archived_count, "archiveZipId": str(archive_report.id), "archiveZipPath": zip_path, "idempotent": bool(idempotency_key), "status": "sent_live"}
