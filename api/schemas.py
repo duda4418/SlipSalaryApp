@@ -130,6 +130,8 @@ class ReportFileResponse(CamelModel):
 	owner_id: UUID
 	created_at: datetime
 	archived: bool
+	content_type: Optional[str]
+	size_bytes: Optional[int]
 
 class ReportFileCreate(CamelModel):
 	path: str

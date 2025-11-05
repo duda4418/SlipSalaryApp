@@ -13,6 +13,7 @@ from db.repositories import (
     repo_update_report_file,
 )
 from utils.files import write_csv, zip_paths, ensure_dir
+import mimetypes
 from utils.pdf import build_salary_pdf
 from services.email_service import send_email
 
@@ -55,7 +56,10 @@ def generate_manager_csv(db: Session, manager_id: UUID, year: int, month: int, i
     file_path = os.path.join(dir_path, f"{manager_id}.csv")
     write_csv(file_path, headers, rows)
 
-    report = repo_create_report_file(db, path=file_path, type='csv', owner_id=manager_id, archived=False)
+    # Load bytes for inline storage
+    with open(file_path, 'rb') as f:
+        content_bytes = f.read()
+    report = repo_create_report_file(db, path=file_path, type='csv', owner_id=manager_id, archived=False, content=content_bytes)
     return report
 
 
@@ -105,8 +109,10 @@ def generate_employee_pdfs(db: Session, manager_id: UUID, year: int, month: int,
         ensure_dir(dir_path)
         pdf_path = os.path.join(dir_path, f"{e.id}.pdf")
         if not overwrite and os.path.exists(pdf_path):
-            # Already exists; optionally create ReportFile if missing
-            report = repo_create_report_file(db, path=pdf_path, type='pdf', owner_id=e.id, archived=False)
+            # Already exists; inline its content if we create a record now
+            with open(pdf_path, 'rb') as f:
+                pdf_bytes = f.read()
+            report = repo_create_report_file(db, path=pdf_path, type='pdf', owner_id=e.id, archived=False, content=pdf_bytes)
             file_ids.append(str(report.id))
             continue
         build_salary_pdf(pdf_path, {
@@ -124,7 +130,9 @@ def generate_employee_pdfs(db: Session, manager_id: UUID, year: int, month: int,
             'working_days': month_info.working_days,
             'vacation_days': vacation_days,
         })
-        report = repo_create_report_file(db, path=pdf_path, type='pdf', owner_id=e.id, archived=False)
+        with open(pdf_path, 'rb') as f:
+            pdf_bytes = f.read()
+        report = repo_create_report_file(db, path=pdf_path, type='pdf', owner_id=e.id, archived=False, content=pdf_bytes)
         file_ids.append(str(report.id))
     return {"generated": len(file_ids), "fileIds": file_ids}
 
@@ -163,5 +171,7 @@ def send_employee_pdfs(db: Session, manager_id: UUID, year: int, month: int, reg
     # Create zip of all archived PDFs for convenience/audit packaging
     zip_path = os.path.join(archive_root, f"{manager_id}_pdfs.zip")
     zip_paths(pdf_paths, zip_path)
-    archive_report = repo_create_report_file(db, path=zip_path, type='zip', owner_id=manager_id, archived=True)
+    with open(zip_path, 'rb') as f:
+        zip_bytes = f.read()
+    archive_report = repo_create_report_file(db, path=zip_path, type='zip', owner_id=manager_id, archived=True, content=zip_bytes)
     return {"sent": sent, "archivedPdfs": archived_count, "archiveZipId": str(archive_report.id), "archiveZipPath": zip_path}

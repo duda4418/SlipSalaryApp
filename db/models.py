@@ -3,7 +3,7 @@ import enum, uuid
 from datetime import datetime, date, timezone
 from sqlalchemy import (
     String, Date, Enum, ForeignKey, Numeric, UniqueConstraint,
-    Boolean, DateTime, Integer
+    Boolean, DateTime, Integer, LargeBinary
 )
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship, Mapped, mapped_column
@@ -80,6 +80,10 @@ class ReportFile(Base):
     owner_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True)) # manager_id or employee_id depending on use
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     archived: Mapped[bool] = mapped_column(Boolean, default=False)
+    # Inline binary storage (simplest approach); optional depending on generation time
+    content: Mapped[bytes | None] = mapped_column(LargeBinary, nullable=True)
+    content_type: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    size_bytes: Mapped[int | None] = mapped_column(Integer, nullable=True)
 
 class RefreshToken(Base):
     __tablename__ = "refresh_tokens"

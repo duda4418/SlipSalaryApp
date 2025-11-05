@@ -209,6 +209,15 @@ def repo_delete_idempotency_key(db: Session, key_id: str):
 # ReportFile mutations
 ############################
 def repo_create_report_file(db: Session, **data):
+	# Normalize required inline content metadata if content provided
+	content = data.get('content')
+	if content is not None:
+		data.setdefault('size_bytes', len(content))
+		# Provide a basic content_type guess if missing
+		if 'content_type' not in data or data['content_type'] is None:
+			ftype = data.get('type')
+			mime_map = {'csv': 'text/csv', 'pdf': 'application/pdf', 'zip': 'application/zip'}
+			data['content_type'] = mime_map.get(ftype, 'application/octet-stream')
 	report = models.ReportFile(**data)
 	db.add(report)
 	try:
