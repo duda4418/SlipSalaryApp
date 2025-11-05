@@ -3,7 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.53">
     <root id="1">
       <DateStyle>mdy</DateStyle>
-      <IntrospectionStateNumber>753</IntrospectionStateNumber>
+      <IntrospectionStateNumber>782</IntrospectionStateNumber>
       <ServerVersion>16.10</ServerVersion>
       <StartupTime>1762161021</StartupTime>
       <TimeZones>true ACDT
@@ -704,7 +704,7 @@ false posixrules
 13276||10|C|G
 13276||-9223372036854775808|U|G
 13276||10|U|G</Grants>
-      <IntrospectionStateNumber>753</IntrospectionStateNumber>
+      <IntrospectionStateNumber>782</IntrospectionStateNumber>
       <ObjectId>16384</ObjectId>
       <OwnerName>slip_salary_user</OwnerName>
     </database>
@@ -4124,11 +4124,11 @@ false posixrules
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <LastIntrospectionL1Xid>753</LastIntrospectionL1Xid>
-      <LastIntrospectionL2Xid>753</LastIntrospectionL2Xid>
-      <LastIntrospectionL3Xid>753</LastIntrospectionL3Xid>
+      <LastIntrospectionL1Xid>782</LastIntrospectionL1Xid>
+      <LastIntrospectionL2Xid>782</LastIntrospectionL2Xid>
+      <LastIntrospectionL3Xid>782</LastIntrospectionL3Xid>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2025-11-03.09:37:08</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-11-04.14:58:38</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>524</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>
@@ -4154,14 +4154,14 @@ adjustment</Labels>
     <table id="267" parent="264" name="employees">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>16390</ObjectId>
-      <StateNumber>733</StateNumber>
+      <StateNumber>781</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>slip_salary_user</OwnerName>
     </table>
     <table id="268" parent="264" name="idempotency_keys">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>16443</ObjectId>
-      <StateNumber>733</StateNumber>
+      <StateNumber>781</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>slip_salary_user</OwnerName>
     </table>
@@ -4175,14 +4175,14 @@ adjustment</Labels>
     <table id="270" parent="264" name="refresh_tokens">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>16465</ObjectId>
-      <StateNumber>733</StateNumber>
+      <StateNumber>781</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>slip_salary_user</OwnerName>
     </table>
     <table id="271" parent="264" name="report_files">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>16451</ObjectId>
-      <StateNumber>733</StateNumber>
+      <StateNumber>781</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>slip_salary_user</OwnerName>
     </table>
@@ -4262,9 +4262,9 @@ adjustment</Labels>
     <column id="282" parent="267" name="created_at">
       <DefaultExpression>now()</DefaultExpression>
       <Position>6</Position>
-      <StateNumber>732</StateNumber>
-      <StoredType>timestamp|0s</StoredType>
-      <TypeId>1114</TypeId>
+      <StateNumber>781</StateNumber>
+      <StoredType>timestamp with time zone|0s</StoredType>
+      <TypeId>1184</TypeId>
     </column>
     <column id="283" parent="267" name="first_name">
       <NotNull>1</NotNull>
@@ -4325,14 +4325,14 @@ adjustment</Labels>
       <ColNames>id</ColNames>
       <ObjectId>16398</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>733</StateNumber>
+      <StateNumber>781</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
     <index id="292" parent="267" name="uq_employees_email">
       <ColNames>email</ColNames>
       <ObjectId>16400</ObjectId>
-      <StateNumber>733</StateNumber>
+      <StateNumber>781</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
       <CollationNames>default</CollationNames>
@@ -4342,7 +4342,7 @@ adjustment</Labels>
     <index id="293" parent="267" name="uq_employees_cnp">
       <ColNames>cnp</ColNames>
       <ObjectId>16402</ObjectId>
-      <StateNumber>733</StateNumber>
+      <StateNumber>781</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
       <CollationNames>default</CollationNames>
@@ -4398,28 +4398,28 @@ adjustment</Labels>
     </column>
     <column id="302" parent="268" name="created_at">
       <Position>6</Position>
-      <StateNumber>732</StateNumber>
-      <StoredType>timestamp|0s</StoredType>
-      <TypeId>1114</TypeId>
+      <StateNumber>781</StateNumber>
+      <StoredType>timestamp with time zone|0s</StoredType>
+      <TypeId>1184</TypeId>
     </column>
     <column id="303" parent="268" name="updated_at">
       <Position>7</Position>
-      <StateNumber>732</StateNumber>
-      <StoredType>timestamp|0s</StoredType>
-      <TypeId>1114</TypeId>
+      <StateNumber>781</StateNumber>
+      <StoredType>timestamp with time zone|0s</StoredType>
+      <TypeId>1184</TypeId>
     </column>
     <index id="304" parent="268" name="pk_idempotency_keys">
       <ColNames>id</ColNames>
       <ObjectId>16448</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>733</StateNumber>
+      <StateNumber>781</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
     <index id="305" parent="268" name="ix_idempotency_keys_key">
       <ColNames>key</ColNames>
       <ObjectId>16450</ObjectId>
-      <StateNumber>733</StateNumber>
+      <StateNumber>781</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
       <CollationNames>default</CollationNames>
@@ -4512,16 +4512,16 @@ month</ColNames>
       <DefaultExpression>now()</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
-      <StateNumber>732</StateNumber>
-      <StoredType>timestamp|0s</StoredType>
-      <TypeId>1114</TypeId>
+      <StateNumber>781</StateNumber>
+      <StoredType>timestamp with time zone|0s</StoredType>
+      <TypeId>1184</TypeId>
     </column>
     <column id="319" parent="270" name="expires_at">
       <NotNull>1</NotNull>
       <Position>5</Position>
-      <StateNumber>732</StateNumber>
-      <StoredType>timestamp|0s</StoredType>
-      <TypeId>1114</TypeId>
+      <StateNumber>781</StateNumber>
+      <StoredType>timestamp with time zone|0s</StoredType>
+      <TypeId>1184</TypeId>
     </column>
     <column id="320" parent="270" name="revoked">
       <DefaultExpression>false</DefaultExpression>
@@ -4557,14 +4557,14 @@ month</ColNames>
       <ColNames>id</ColNames>
       <ObjectId>16470</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>733</StateNumber>
+      <StateNumber>781</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
     <index id="325" parent="270" name="uq_refresh_tokens_token_hash">
       <ColNames>token_hash</ColNames>
       <ObjectId>16472</ObjectId>
-      <StateNumber>733</StateNumber>
+      <StateNumber>781</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
       <CollationNames>default</CollationNames>
@@ -4574,7 +4574,7 @@ month</ColNames>
     <index id="326" parent="270" name="ix_refresh_tokens_employee_id">
       <ColNames>employee_id</ColNames>
       <ObjectId>16484</ObjectId>
-      <StateNumber>733</StateNumber>
+      <StateNumber>781</StateNumber>
       <AccessMethodId>403</AccessMethodId>
     </index>
     <key id="327" parent="270" name="pk_refresh_tokens">
@@ -4616,9 +4616,9 @@ month</ColNames>
     </column>
     <column id="333" parent="271" name="created_at">
       <Position>5</Position>
-      <StateNumber>732</StateNumber>
-      <StoredType>timestamp|0s</StoredType>
-      <TypeId>1114</TypeId>
+      <StateNumber>781</StateNumber>
+      <StoredType>timestamp with time zone|0s</StoredType>
+      <TypeId>1184</TypeId>
     </column>
     <column id="334" parent="271" name="archived">
       <Position>6</Position>
@@ -4630,7 +4630,7 @@ month</ColNames>
       <ColNames>id</ColNames>
       <ObjectId>16456</ObjectId>
       <Primary>1</Primary>
-      <StateNumber>733</StateNumber>
+      <StateNumber>781</StateNumber>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>

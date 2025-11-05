@@ -16,10 +16,10 @@ app = fastapi.FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,                # set True if you use cookies/Authorization
-    allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["*"],                   # or ["Content-Type", "Authorization"]
-    expose_headers=[],                     # add if you need to read custom headers on responses
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    expose_headers=[],
 )
 
 app.include_router(health_router, prefix="/api")

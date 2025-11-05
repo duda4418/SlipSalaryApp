@@ -64,9 +64,17 @@ def send_manager_csv(db: Session, manager_id: UUID, year: int, month: int) -> di
     manager = _get_manager(db, manager_id)
     send_email(manager.email, f"Monthly CSV {year}-{month:02d}", "Attached CSV report", [report.path])
 
-    # Archive via repository update; get refreshed object back
-    report = repo_update_report_file(db, str(report.id), archived=True)
-    return {"status":"sent","fileId": str(report.id), "archived": True}
+    # Move/copy CSV into archive folder and mark archived
+    archive_dir = os.path.join(BASE_REPORT_DIR, 'archives', f"{year}-{month:02d}")
+    ensure_dir(archive_dir)
+    archive_path = os.path.join(archive_dir, os.path.basename(report.path))
+    try:
+        import shutil
+        shutil.copy2(report.path, archive_path)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to archive CSV: {e}")
+    report = repo_update_report_file(db, str(report.id), archived=True, path=archive_path)
+    return {"status":"sent","fileId": str(report.id), "archived": True, "archivePath": archive_path}
 
 
 def generate_employee_pdfs(db: Session, manager_id: UUID, year: int, month: int, overwrite: bool=False) -> dict:
@@ -134,11 +142,26 @@ def send_employee_pdfs(db: Session, manager_id: UUID, year: int, month: int, reg
             send_email(e.email, f"Salary Slip {year}-{month:02d}", "Attached PDF salary slip", [pdf_path])
             pdf_paths.append(pdf_path)
             sent += 1
-    # Archive PDFs
-    archive_dir = os.path.join(BASE_REPORT_DIR, 'archives', f"{year}-{month:02d}")
-    ensure_dir(archive_dir)
-    zip_path = os.path.join(archive_dir, f"{manager_id}_pdfs.zip")
+    # Archive individual PDFs then also create a zip bundle
+    archive_root = os.path.join(BASE_REPORT_DIR, 'archives', f"{year}-{month:02d}")
+    archive_pdfs_dir = os.path.join(archive_root, 'pdfs')
+    ensure_dir(archive_pdfs_dir)
+    import shutil
+    archived_count = 0
+    from db.repositories import repo_get_report_file_by_path, repo_update_report_file
+    for p in pdf_paths:
+        archive_path = os.path.join(archive_pdfs_dir, os.path.basename(p))
+        try:
+            shutil.copy2(p, archive_path)
+            archived_count += 1
+            report_rec = repo_get_report_file_by_path(db, p)
+            if report_rec:
+                repo_update_report_file(db, str(report_rec.id), archived=True, path=archive_path)
+        except Exception:
+            # Skip failures but continue archiving others
+            pass
+    # Create zip of all archived PDFs for convenience/audit packaging
+    zip_path = os.path.join(archive_root, f"{manager_id}_pdfs.zip")
     zip_paths(pdf_paths, zip_path)
-    # We could create a ReportFile record for archive
     archive_report = repo_create_report_file(db, path=zip_path, type='zip', owner_id=manager_id, archived=True)
-    return {"sent": sent, "archiveZipId": str(archive_report.id), "archivePath": zip_path}
+    return {"sent": sent, "archivedPdfs": archived_count, "archiveZipId": str(archive_report.id), "archiveZipPath": zip_path}

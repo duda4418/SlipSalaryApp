@@ -1,6 +1,6 @@
 # models.py
 import enum, uuid
-from datetime import datetime, date
+from datetime import datetime, date, timezone
 from sqlalchemy import (
     String, Date, Enum, ForeignKey, Numeric, UniqueConstraint,
     Boolean, DateTime, Integer
@@ -22,7 +22,7 @@ class Employee(Base):
     password_hash: Mapped[str | None] = mapped_column(String(255), nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     is_manager: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
     # Domain fields
     first_name: Mapped[str] = mapped_column(String(255), nullable=False)
@@ -69,8 +69,8 @@ class IdempotencyKey(Base):
     endpoint: Mapped[str] = mapped_column(String(128))
     status: Mapped[str] = mapped_column(String(32), default="started") # started/succeeded/failed
     result_path: Mapped[str | None] = mapped_column(String(512), nullable=True)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
 class ReportFile(Base):
     __tablename__ = "report_files"
@@ -78,7 +78,7 @@ class ReportFile(Base):
     path: Mapped[str] = mapped_column(String(512), nullable=False)
     type: Mapped[str] = mapped_column(String(32))  # csv or pdf
     owner_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True)) # manager_id or employee_id depending on use
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     archived: Mapped[bool] = mapped_column(Boolean, default=False)
 
 class RefreshToken(Base):
@@ -86,8 +86,8 @@ class RefreshToken(Base):
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     employee_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("employees.id"), index=True, nullable=False)
     token_hash: Mapped[str] = mapped_column(String(255), unique=True, nullable=False)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    expires_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     revoked: Mapped[bool] = mapped_column(Boolean, default=False)
     replaced_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("refresh_tokens.id"), nullable=True)
 

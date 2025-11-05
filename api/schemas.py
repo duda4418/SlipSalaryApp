@@ -109,8 +109,8 @@ class IdempotencyKeyResponse(CamelModel):
 	endpoint: str
 	status: str
 	result_path: Optional[str]
-	created_at: date
-	updated_at: date
+	created_at: datetime
+	updated_at: datetime
 
 class IdempotencyKeyCreate(CamelModel):
 	key: str
@@ -128,7 +128,7 @@ class ReportFileResponse(CamelModel):
 	path: str
 	type: str
 	owner_id: UUID
-	created_at: date
+	created_at: datetime
 	archived: bool
 
 class ReportFileCreate(CamelModel):

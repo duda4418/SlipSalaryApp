@@ -291,6 +291,10 @@ def repo_get_report_file_by_id(db: Session, report_id: str):
 		raise HTTPException(status_code=404, detail="Report not found")
 	return report
 
+def repo_get_report_file_by_path(db: Session, path: str):
+	report = db.query(models.ReportFile).filter(models.ReportFile.path == path).first()
+	return report
+
 # RefreshToken repositories
 def repo_create_refresh_token(db: Session, **data):
 	token = models.RefreshToken(**data)
@@ -327,9 +331,19 @@ def repo_issue_refresh_token(db: Session, employee_id, raw_token: str, expires_a
 	return repo_create_refresh_token(db, employee_id=employee_id, token_hash=token_hash, expires_at=expires_at)
 
 def repo_validate_refresh_token_and_get_user(db: Session, raw_token: str) -> tuple[models.Employee, models.RefreshToken]:
+	"""Validate a refresh token returning (user, refresh_token) or raise 401.
+
+	Handles legacy naive timestamps by assuming they are UTC.
+	"""
 	token_hash = hashlib.sha256(raw_token.encode()).hexdigest()
 	rt = repo_get_refresh_token_by_hash(db, token_hash)
-	if not rt or rt.revoked or rt.expires_at < datetime.now(timezone.utc):
+	if not rt or rt.revoked:
+		raise HTTPException(status_code=401, detail="Invalid refresh token")
+	expires_at = rt.expires_at
+	if expires_at.tzinfo is None:
+		# Assume stored as UTC naive
+		expires_at = expires_at.replace(tzinfo=timezone.utc)
+	if expires_at < datetime.now(timezone.utc):
 		raise HTTPException(status_code=401, detail="Invalid refresh token")
 	user = db.get(models.Employee, rt.employee_id)
 	if not user or not user.is_active:
