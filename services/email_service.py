@@ -19,7 +19,7 @@ from core.settings import settings
 # endpoints will NEVER send through the real provider.
 DEV_SMTP_HOST = "localhost"
 DEV_SMTP_PORT = 1025
-DEV_SMTP_FROM = "dev@example.test"  # Distinct from production From (can still use settings.SMTP_FROM if preferred)
+DEV_SMTP_FROM = "slipsalaryapp@payroll.com"  # Distinct from production From (can still use settings.SMTP_FROM if preferred)
 
 logger = logging.getLogger(__name__)
 
