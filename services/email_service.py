@@ -14,9 +14,7 @@ import smtplib
 from email.message import EmailMessage
 from core.settings import settings
 
-# Hard-coded development SMTP override for MailHog usage. This ensures that
-# even if a developer has production-like credentials in their .env, the dev
-# endpoints will NEVER send through the real provider.
+
 DEV_SMTP_HOST = "localhost"
 DEV_SMTP_PORT = 1025
 DEV_SMTP_FROM = "slipsalaryapp@payroll.com"  # Distinct from production From (can still use settings.SMTP_FROM if preferred)

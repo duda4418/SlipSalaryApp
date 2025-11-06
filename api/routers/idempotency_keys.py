@@ -20,20 +20,20 @@ def list_idempotency_keys(db: Session = Depends(session.get_db)):
 
 
 @idempotency_router.get("/{key_id}", response_model=IdempotencyKeyResponse)
-def get_idempotency_key_by_id_endpoint(key_id: str, db: Session = Depends(session.get_db)):
+def get_idempotency_key_by_id(key_id: str, db: Session = Depends(session.get_db)):
     return svc_get_idempotency_key_by_id(db, key_id)
 
 
 @idempotency_router.post("", response_model=IdempotencyKeyResponse)
-def create_idempotency_key_endpoint(key: IdempotencyKeyCreate, db: Session = Depends(session.get_db)):
+def create_idempotency_key(key: IdempotencyKeyCreate, db: Session = Depends(session.get_db)):
     return svc_create_idempotency_key(db, key)
 
 
 @idempotency_router.put("/{key_id}", response_model=IdempotencyKeyResponse)
-def update_idempotency_key_endpoint(key_id: str, key: IdempotencyKeyUpdate, db: Session = Depends(session.get_db)):
+def update_idempotency_key(key_id: str, key: IdempotencyKeyUpdate, db: Session = Depends(session.get_db)):
     return svc_update_idempotency_key(db, key_id, key)
 
 
 @idempotency_router.delete("/{key_id}")
-def delete_idempotency_key_endpoint(key_id: str, db: Session = Depends(session.get_db)):
+def delete_idempotency_key(key_id: str, db: Session = Depends(session.get_db)):
     return svc_delete_idempotency_key(db, key_id)

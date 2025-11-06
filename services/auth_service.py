@@ -4,8 +4,8 @@ import hashlib
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 
-from db.repositories import (
-    repo_validate_login,
+from db.repositories.auth_repo import repo_validate_login
+from db.repositories.refresh_tokens_repo import (
     repo_issue_refresh_token,
     repo_validate_refresh_token_and_get_user,
     repo_rotate_refresh_token_and_issue,

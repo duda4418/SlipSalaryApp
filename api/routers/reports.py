@@ -1,3 +1,4 @@
+import os
 from fastapi import APIRouter, Depends, HTTPException
 from auth.deps import require_manager
 from fastapi.responses import StreamingResponse, FileResponse
@@ -11,7 +12,6 @@ from services.reports_service import (
     update_report_file as svc_update_report_file,
     delete_report_file as svc_delete_report_file,
 )
-import os
 
 reports_router = APIRouter(prefix="/reports", dependencies=[Depends(require_manager)])
 
@@ -31,7 +31,7 @@ def list_report_files(db: Session = Depends(session.get_db)):
 
 
 @reports_router.get("/{report_id}", response_model=ReportFileResponse)
-def get_report_file_by_id_endpoint(report_id: str, db: Session = Depends(session.get_db)):
+def get_report_file_by_id(report_id: str, db: Session = Depends(session.get_db)):
     clean_id = _normalize_report_id(report_id)
     return svc_get_report_file_by_id(db, clean_id)
 
@@ -55,15 +55,15 @@ def download_report_file(report_id: str, db: Session = Depends(session.get_db)):
 
 
 @reports_router.post("", response_model=ReportFileResponse)
-def create_report_file_endpoint(report: ReportFileCreate, db: Session = Depends(session.get_db)):
+def create_report_file(report: ReportFileCreate, db: Session = Depends(session.get_db)):
     return svc_create_report_file(db, report)
 
 
 @reports_router.put("/{report_id}", response_model=ReportFileResponse)
-def update_report_file_endpoint(report_id: str, report: ReportFileUpdate, db: Session = Depends(session.get_db)):
+def update_report_file(report_id: str, report: ReportFileUpdate, db: Session = Depends(session.get_db)):
     return svc_update_report_file(db, report_id, report)
 
 
 @reports_router.delete("/{report_id}")
-def delete_report_file_endpoint(report_id: str, db: Session = Depends(session.get_db)):
+def delete_report_file(report_id: str, db: Session = Depends(session.get_db)):
     return svc_delete_report_file(db, report_id)

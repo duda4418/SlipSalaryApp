@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from db.repositories import (
+from db.repositories.report_files_repo import (
     repo_list_report_files,
     repo_get_report_file_by_id,
     repo_create_report_file,

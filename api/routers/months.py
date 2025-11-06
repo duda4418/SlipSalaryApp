@@ -20,20 +20,20 @@ def list_months(db: Session = Depends(session.get_db)):
 
 
 @months_router.get("/{month_id}", response_model=MonthInfoResponse)
-def get_month_by_id_endpoint(month_id: str, db: Session = Depends(session.get_db)):
+def get_month_by_id(month_id: str, db: Session = Depends(session.get_db)):
     return svc_get_month_by_id(db, month_id)
 
 
 @months_router.post("", response_model=MonthInfoResponse)
-def create_month_endpoint(month: MonthInfoCreate, db: Session = Depends(session.get_db)):
+def create_month(month: MonthInfoCreate, db: Session = Depends(session.get_db)):
     return svc_create_month(db, month)
 
 
 @months_router.put("/{month_id}", response_model=MonthInfoResponse)
-def update_month_endpoint(month_id: str, month: MonthInfoUpdate, db: Session = Depends(session.get_db)):
+def update_month(month_id: str, month: MonthInfoUpdate, db: Session = Depends(session.get_db)):
     return svc_update_month(db, month_id, month)
 
 
 @months_router.delete("/{month_id}")
-def delete_month_endpoint(month_id: str, db: Session = Depends(session.get_db)):
+def delete_month(month_id: str, db: Session = Depends(session.get_db)):
     return svc_delete_month(db, month_id)

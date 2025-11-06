@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from db.repositories import (
+from db.repositories.employees_repo import (
     repo_list_employees,
     repo_get_employee_by_id,
     repo_create_employee,

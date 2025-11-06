@@ -20,20 +20,20 @@ def list_vacations(db: Session = Depends(session.get_db)):
 
 
 @vacations_router.get("/{vacation_id}", response_model=VacationResponse)
-def get_vacation_by_id_endpoint(vacation_id: str, db: Session = Depends(session.get_db)):
+def get_vacation_by_id(vacation_id: str, db: Session = Depends(session.get_db)):
     return svc_get_vacation_by_id(db, vacation_id)
 
 
 @vacations_router.post("", response_model=VacationResponse)
-def create_vacation_endpoint(vacation: VacationCreate, db: Session = Depends(session.get_db)):
+def create_vacation(vacation: VacationCreate, db: Session = Depends(session.get_db)):
     return svc_create_vacation(db, vacation)
 
 
 @vacations_router.put("/{vacation_id}", response_model=VacationResponse)
-def update_vacation_endpoint(vacation_id: str, vacation: VacationUpdate, db: Session = Depends(session.get_db)):
+def update_vacation(vacation_id: str, vacation: VacationUpdate, db: Session = Depends(session.get_db)):
     return svc_update_vacation(db, vacation_id, vacation)
 
 
 @vacations_router.delete("/{vacation_id}")
-def delete_vacation_endpoint(vacation_id: str, db: Session = Depends(session.get_db)):
+def delete_vacation(vacation_id: str, db: Session = Depends(session.get_db)):
     return svc_delete_vacation(db, vacation_id)

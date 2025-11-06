@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from db.repositories import (
+from db.repositories.vacations_repo import (
     repo_list_vacations,
     repo_get_vacation_by_id,
     repo_create_vacation,

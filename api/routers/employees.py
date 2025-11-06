@@ -19,26 +19,26 @@ employees_router = APIRouter(prefix="/employees", dependencies=[Depends(require_
 def list_employees(db: Session = Depends(session.get_db)):
     return svc_list_employees(db)
 
-@employees_router.get("/{manager_id}", response_model=list[EmployeeResponse])
+@employees_router.get("/manager/{manager_id}", response_model=list[EmployeeResponse])
 def list_employees_by_manager(manager_id: str, db: Session = Depends(session.get_db)):
     return svc_get_employees_by_manager(db, manager_id)
 
 
 @employees_router.get("/{employee_id}", response_model=EmployeeResponse)
-def get_employee_by_id_endpoint(employee_id: str, db: Session = Depends(session.get_db)):
+def get_employee_by_id(employee_id: str, db: Session = Depends(session.get_db)):
     return svc_get_employee_by_id(db, employee_id)
 
 
 @employees_router.post("", response_model=EmployeeResponse)
-def create_employee_endpoint(employee: EmployeeCreate, db: Session = Depends(session.get_db)):
+def create_employee(employee: EmployeeCreate, db: Session = Depends(session.get_db)):
     return svc_create_employee(db, employee)
 
 
 @employees_router.put("/{employee_id}", response_model=EmployeeResponse)
-def update_employee_endpoint(employee_id: str, employee: EmployeeUpdate, db: Session = Depends(session.get_db)):
+def update_employee(employee_id: str, employee: EmployeeUpdate, db: Session = Depends(session.get_db)):
     return svc_update_employee(db, employee_id, employee)
 
 
 @employees_router.delete("/{employee_id}")
-def delete_employee_endpoint(employee_id: str, db: Session = Depends(session.get_db)):
+def delete_employee(employee_id: str, db: Session = Depends(session.get_db)):
     return svc_delete_employee(db, employee_id)

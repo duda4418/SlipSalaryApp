@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from db.repositories import (
+from db.repositories.months_repo import (
     repo_list_months,
     repo_get_month_by_id,
     repo_create_month,

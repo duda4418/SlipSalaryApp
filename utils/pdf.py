@@ -14,9 +14,9 @@ def build_salary_pdf(path: str, data: Dict):
     textobject.setFont('Helvetica', 12)
     textobject.textLine(f"Salary Slip - {data['year']}-{data['month']}")
     textobject.textLine("")
-    for k in ['employee_id','name','cnp','hire_date','manager_name','base_salary','bonus_total','adjustment_total','gross_salary','working_days','vacation_days']:
-        if k in data:
-            textobject.textLine(f"{k.replace('_',' ').title()}: {data[k]}")
+    for key in ['employee_id','name','cnp','hire_date','manager_name','base_salary','bonus_total','adjustment_total','gross_salary','working_days','vacation_days']:
+        if key in data:
+            textobject.textLine(f"{key.replace('_',' ').title()}: {data[key]}")
     c.drawText(textobject)
     c.showPage()
     c.save()

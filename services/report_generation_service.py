@@ -6,13 +6,18 @@ from uuid import UUID
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from db import models
-from db.repositories import (
+from db.repositories.report_files_repo import (
     repo_create_report_file,
+    repo_update_report_file,
+    repo_get_report_file_by_path,
+)
+from db.repositories.reporting_queries import (
     repo_get_manager,
     repo_list_subordinates,
-    repo_get_month_info_by_year_month,
     repo_aggregate_employee_month_summary,
-    repo_update_report_file,
+)
+from db.repositories.months_repo import repo_get_month_info_by_year_month
+from db.repositories.idempotency_repo import (
     repo_get_idempotency_key_by_key,
     repo_create_idempotency_key,
     repo_mark_idempotency_key_succeeded,
@@ -284,7 +289,7 @@ def send_employee_pdfs(db: Session, manager_id: UUID, year: int, month: int, reg
     archive_pdfs_dir = os.path.join(archive_root, 'pdfs')
     ensure_dir(archive_pdfs_dir)
     archived_count = 0
-    from db.repositories import repo_get_report_file_by_path, repo_update_report_file
+    # repo_get_report_file_by_path, repo_update_report_file imported at top
     for p in pdf_paths:
         archive_path = os.path.join(archive_pdfs_dir, os.path.basename(p))
         try:
@@ -353,7 +358,7 @@ def send_employee_pdfs_live(db: Session, manager_id: UUID, year: int, month: int
     archive_pdfs_dir = os.path.join(archive_root, 'pdfs')
     ensure_dir(archive_pdfs_dir)
     archived_count = 0
-    from db.repositories import repo_get_report_file_by_path, repo_update_report_file
+    # repo_get_report_file_by_path, repo_update_report_file imported at top
     for p in pdf_paths:
         archive_path = os.path.join(archive_pdfs_dir, os.path.basename(p))
         try:

@@ -5,7 +5,7 @@ import uuid
 import hashlib
 
 from passlib.context import CryptContext
-import jwt  # PyJWT
+import jwt
 
 from core.settings import settings
 

@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from db.repositories import (
+from db.repositories.salary_components_repo import (
     repo_list_salary_components,
     repo_get_salary_component_by_id,
     repo_create_salary_component,

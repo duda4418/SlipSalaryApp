@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from db.repositories import (
+from db.repositories.idempotency_repo import (
     repo_list_idempotency_keys,
     repo_get_idempotency_key_by_id,
     repo_create_idempotency_key,

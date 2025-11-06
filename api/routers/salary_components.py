@@ -20,20 +20,20 @@ def list_salary_components(db: Session = Depends(session.get_db)):
 
 
 @salary_components_router.get("/{component_id}", response_model=SalaryComponentResponse)
-def get_salary_component_by_id_endpoint(component_id: str, db: Session = Depends(session.get_db)):
+def get_salary_component_by_id(component_id: str, db: Session = Depends(session.get_db)):
     return svc_get_salary_component_by_id(db, component_id)
 
 
 @salary_components_router.post("", response_model=SalaryComponentResponse)
-def create_salary_component_endpoint(component: SalaryComponentCreate, db: Session = Depends(session.get_db)):
+def create_salary_component(component: SalaryComponentCreate, db: Session = Depends(session.get_db)):
     return svc_create_salary_component(db, component)
 
 
 @salary_components_router.put("/{component_id}", response_model=SalaryComponentResponse)
-def update_salary_component_endpoint(component_id: str, component: SalaryComponentUpdate, db: Session = Depends(session.get_db)):
+def update_salary_component(component_id: str, component: SalaryComponentUpdate, db: Session = Depends(session.get_db)):
     return svc_update_salary_component(db, component_id, component)
 
 
 @salary_components_router.delete("/{component_id}")
-def delete_salary_component_endpoint(component_id: str, db: Session = Depends(session.get_db)):
+def delete_salary_component(component_id: str, db: Session = Depends(session.get_db)):
     return svc_delete_salary_component(db, component_id)
