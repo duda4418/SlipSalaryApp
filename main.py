@@ -1,4 +1,5 @@
 import fastapi, uvicorn
+from core.logging import configure_logging, RequestLoggingMiddleware
 
 from api.routers.employees import employees_router
 from api.routers.health import health_router
@@ -11,7 +12,9 @@ from api.routers.vacations import vacations_router
 from api.routers.auth import auth_router
 from fastapi.middleware.cors import CORSMiddleware
 
+configure_logging()
 app = fastapi.FastAPI()
+app.add_middleware(RequestLoggingMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
