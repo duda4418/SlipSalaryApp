@@ -2,7 +2,7 @@ import uuid
 import pytest
 from fastapi.testclient import TestClient
 
-from main import app
+from app_factory import create_app
 from auth.deps import require_manager
 from db import session as db_session
 
@@ -51,8 +51,13 @@ class DummyDB:
         return None
 
 
+@pytest.fixture
+def app():
+    return create_app()
+
+
 @pytest.fixture(autouse=True)
-def override_dependencies():
+def override_dependencies(app):
     # Bypass auth/manager requirement
     app.dependency_overrides[require_manager] = lambda: DummyManager()
 
@@ -70,5 +75,5 @@ def override_dependencies():
 
 
 @pytest.fixture
-def client():
+def client(app):
     return TestClient(app)
