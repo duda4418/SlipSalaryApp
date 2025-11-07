@@ -1,0 +1,17 @@
+[run]
+source = 
+    api
+    services
+    utils
+omit =
+    services/auth_service.py
+    services/email_service.py
+    services/idempotency_keys_service.py
+    services/months_service.py
+    services/report_generation_service.py
+    services/reports_service.py
+    services/salary_components_service.py
+    services/vacations_service.py
+    utils/files.py
+    utils/pdf.py
+    db/*
